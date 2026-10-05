@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>LDC Zona 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#F6F3ED;
+    --surface:#FFFFFF;
+    --ink:#1C2230;
+    --ink-soft:#5B6474;
+    --line:#DFD7C8;
+    --accent:#2B5D6B;
+    --accent-ink:#163842;
+    --accent-soft:#DCEBEC;
+    --gold:#9C6E1D;
+    --gold-soft:#F1E4C8;
+    --warn:#A8392E;
+    --warn-soft:#F5DEDA;
+    --good:#3F7D43;
+    --good-soft:#DFEEDD;
+    --shadow: 0 1px 2px rgba(28,34,48,.06), 0 8px 24px -12px rgba(28,34,48,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14181D;
+      --surface:#1B222A;
+      --ink:#EAE6DC;
+      --ink-soft:#9CA4B2;
+      --line:#2B323C;
+      --accent:#7FC2CF;
+      --accent-ink:#DCEBEC;
+      --accent-soft:#20343B;
+      --gold:#E0B15A;
+      --gold-soft:#332A18;
+      --warn:#E58579;
+      --warn-soft:#3A211E;
+      --good:#6FBE78;
+      --good-soft:#1E3220;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14181D;
+    --surface:#1B222A;
+    --ink:#EAE6DC;
+    --ink-soft:#9CA4B2;
+    --line:#2B323C;
+    --accent:#7FC2CF;
+    --accent-ink:#DCEBEC;
+    --accent-soft:#20343B;
+    --gold:#E0B15A;
+    --gold-soft:#332A18;
+    --warn:#E58579;
+    --warn-soft:#3A211E;
+    --good:#6FBE78;
+    --good-soft:#1E3220;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Big Shoulders Display', system-ui, sans-serif; text-wrap:balance; margin:0; letter-spacing:.01em; }
+  code, .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px 64px; }
+
+  /* ---------- Header ---------- */
+  header.top{
+    padding:0 24px 30px;
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .mountain-banner{
+    width:100vw;
+    position:relative;
+    left:50%;
+    margin-left:-50vw;
+    line-height:0;
+    background:var(--paper);
+  }
+  .mountain-banner svg{ display:block; width:100%; height:clamp(64px,11vw,132px); }
+  .mountain-banner .peak{ vector-effect:non-scaling-stroke; }
+
+  .top-inner{ max-width:760px; margin:22px auto 0; display:flex; flex-direction:column; align-items:center; text-align:center; gap:2px; }
+  h1.title{ font-family:'Big Shoulders Display'; font-size:clamp(58px,10vw,104px); font-weight:800; line-height:.9; letter-spacing:.01em; color:var(--ink); }
+  .zona-mid{ font-family:'Big Shoulders Display'; font-size:clamp(22px,3.4vw,32px); font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-ink); margin-top:2px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-top:10px;
+  }
+  .meta-stats{ display:flex; gap:32px; flex-wrap:wrap; justify-content:center; padding-top:12px; margin-top:20px; border-top:1px solid var(--line); width:100%; }
+  .stat{ text-align:center; }
+  .stat .n{ font-family:'Big Shoulders Display'; font-weight:700; font-size:26px; line-height:1; color:var(--accent-ink); background:none; }
+  .stat .l{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-top:4px; }
+
+  /* ---------- Controls ---------- */
+  .controls{
+    position:sticky; top:0; z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .controls-inner{ max-width:1180px; margin:0 auto; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .search-box{
+    flex:1 1 260px;
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:9px 14px;
+  }
+  .search-box svg{ flex:none; opacity:.55; }
+  .search-box input{
+    border:0; outline:0; background:transparent; width:100%;
+    font-family:'Public Sans'; font-size:14.5px; color:var(--ink);
+  }
+  .search-box input::placeholder{ color:var(--ink-soft); }
+  .filter-radio{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+  .tabs{ display:flex; gap:6px; background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:3px; }
+  .tabs label{
+    border:0; background:transparent; padding:7px 14px; border-radius:6px;
+    font-family:'Public Sans'; font-weight:600; font-size:13px; color:var(--ink-soft);
+    cursor:pointer; user-select:none;
+  }
+  #filter-all:checked ~ .controls .tabs label[for="filter-all"],
+  #filter-mir:checked ~ .controls .tabs label[for="filter-mir"],
+  #filter-dc:checked ~ .controls .tabs label[for="filter-dc"]{
+    background:var(--accent); color:#fff;
+  }
+  /* CSS-only fallback filtering: applies whenever JS hasn't overridden a card's
+     display with an inline style (e.g. a viewer that blocks script execution). */
+  #filter-mir:checked ~ .wrap .grid .card[data-type="DC"],
+  #filter-dc:checked ~ .wrap .grid .card[data-type="MIR"]{
+    display:none;
+  }
+  .print-btn{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:9px; padding:9px 16px; font-family:'Public Sans'; font-weight:600; font-size:13px;
+    cursor:pointer; display:flex; align-items:center; gap:7px;
+  }
+  .print-btn:hover{ border-color:var(--accent); color:var(--accent-ink); }
+
+  /* ---------- Section headings ---------- */
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:48px 0 18px; flex-wrap:wrap; }
+  .section-head h2{ font-size:28px; font-weight:700; }
+  .section-head .count{ font-family:'IBM Plex Mono'; font-size:13px; color:var(--ink-soft); }
+
+  /* ---------- Legend ---------- */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:16px; font-size:13px; color:var(--ink-soft); }
+  .legend b{ color:var(--ink); font-weight:600; }
+  .legend .swatch{ display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:6px; vertical-align:middle; }
+
+  /* ---------- Leadership band ---------- */
+  .lead-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .lead-head{
+    background:var(--accent-soft);
+    padding:22px 26px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .lead-head h3{ font-size:24px; font-weight:700; color:var(--accent-ink); }
+  .lead-head .role-tag{ font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-ink); opacity:.75; }
+  .lead-body{ padding:26px; display:grid; grid-template-columns:1.1fr 2fr; gap:28px; }
+  .field-reps{ }
+  .field-reps .label{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px; }
+  .field-reps .person{ font-size:19px; font-weight:600; line-height:1.5; }
+  .assist-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; }
+  .assist-card{ border:1px solid var(--line); border-radius:11px; padding:15px 16px; background:var(--paper); }
+  .assist-card .area{ font-size:11.5px; letter-spacing:.05em; color:var(--gold); font-weight:600; text-transform:uppercase; margin-bottom:8px; }
+  .assist-card .person{ font-size:14.5px; font-weight:600; line-height:1.6; }
+  .lead-foot{ padding:16px 26px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  .email{ font-family:'IBM Plex Mono'; font-size:13px; color:var(--accent-ink); background:var(--accent-soft); padding:5px 11px; border-radius:6px; }
+
+  /* ---------- Unit grid ---------- */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:18px; }
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden;
+  }
+  .card-head{ padding:16px 18px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .card-head .code-wrap{ display:flex; align-items:center; gap:9px; }
+  .card-head .code{ font-size:26px; font-weight:700; font-family:'Big Shoulders Display'; line-height:1; }
+  .type-pill{ font-size:10.5px; font-weight:700; letter-spacing:.06em; padding:3px 7px; border-radius:5px; }
+  .type-pill.MIR{ background:var(--accent-soft); color:var(--accent-ink); }
+  .type-pill.DC{ background:var(--gold-soft); color:var(--gold); }
+  .card-head .email{ font-size:11px; padding:4px 8px; white-space:nowrap; }
+  .warn-flag{ display:inline-flex; align-items:center; gap:5px; font-size:10.5px; font-weight:600; color:var(--warn); background:var(--warn-soft); padding:3px 7px; border-radius:5px; margin-top:6px; }
+
+  .card-body{ padding:14px 18px; display:flex; flex-direction:column; gap:12px; }
+  .members{ display:flex; flex-direction:column; gap:7px; }
+  .member-row{ display:flex; align-items:center; gap:9px; font-size:14.5px; }
+  .role-badge{
+    font-family:'IBM Plex Mono'; font-size:10px; font-weight:600; letter-spacing:.02em;
+    padding:2px 6px; border-radius:4px; min-width:38px; text-align:center; flex:none;
+  }
+  .role-badge.lead{ background:var(--accent-soft); color:var(--accent-ink); }
+  .role-badge.aux{ background:var(--gold-soft); color:var(--gold); }
+  .role-badge.none{ background:var(--line); color:var(--ink-soft); }
+
+  .props{ border-top:1px dashed var(--line); padding-top:12px; }
+  .props .label{ font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; }
+  .prop-list{ display:flex; flex-wrap:wrap; gap:6px; }
+  .prop-tag{
+    font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--ink); background:var(--paper);
+    border:1px solid var(--line); padding:3px 8px; border-radius:6px; line-height:1.4;
+  }
+  .prop-tag .code{ color:var(--accent-ink); font-weight:600; }
+
+  .no-results{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-size:15px; display:none; }
+  .no-results.show{ display:block; }
+
+  footer.page-foot{ margin-top:56px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:720px){
+    .lead-body{ grid-template-columns:1fr; }
+  }
+
+  @media print{
+    .controls{ display:none; }
+    .card, .lead-card{ box-shadow:none; break-inside:avoid; }
+    .grid{ grid-template-columns:1fr 1fr; }
+    body{ background:#fff; }
+  }
+</style>
+<style>
+  /* ============ App tabs (Directorio / Auditorías / Dashboard) ============ */
+  .app-tabs{
+    position:sticky; top:0; z-index:30;
+    background:var(--paper); border-bottom:1px solid var(--line);
+    display:flex; justify-content:center; gap:6px; padding:10px 24px;
+  }
+  .app-tabs button{
+    border:1px solid transparent; background:transparent; color:var(--ink-soft);
+    font-family:'Public Sans'; font-weight:700; font-size:13.5px; letter-spacing:.02em;
+    padding:9px 18px; border-radius:9px; cursor:pointer;
+  }
+  .app-tabs button:hover{ color:var(--ink); }
+  .app-tabs button.active{ background:var(--accent); color:#fff; }
+  .app-panel{ display:none; }
+  .app-panel.active{ display:block; }
+
+  /* ============ Shared form chrome ============ */
+  .panel-head{ max-width:1180px; margin:0 auto; padding:36px 24px 4px; }
+  .panel-head h2{ font-size:28px; font-weight:700; }
+  .panel-head p{ margin-top:6px; color:var(--ink-soft); font-size:14.5px; max-width:70ch; }
+  .form-wrap{ max-width:880px; margin:0 auto; padding:24px 24px 80px; }
+  .field{ margin-bottom:20px; }
+  .field > label.field-label{
+    display:block; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:600; margin-bottom:7px;
+  }
+  .field select, .field input[type="date"], .field input[type="text"], .field input[type="month"], .field textarea{
+    width:100%; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:9px; padding:11px 13px; font-family:'Public Sans'; font-size:14.5px;
+  }
+  .field select:focus, .field input:focus, .field textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .field textarea{ resize:vertical; min-height:56px; font-family:'Public Sans'; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:640px){ .field-row{ grid-template-columns:1fr; } }
+
+  .type-card-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:6px; }
+  .type-card{
+    border:1px solid var(--line); background:var(--surface); border-radius:11px;
+    padding:13px 14px; cursor:pointer; font-size:13.5px; font-weight:600; color:var(--ink-soft);
+    text-align:center; transition:border-color .12s, color .12s, background .12s;
+  }
+  .type-card.active{ border-color:var(--accent); background:var(--accent-soft); color:var(--accent-ink); }
+
+  /* ============ Score controls ============ */
+  .score-ctrl{ display:flex; align-items:center; gap:10px; flex:none; }
+  .score-dot{
+    width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Big Shoulders Display'; font-weight:700; font-size:16px; color:#fff;
+    background:var(--line); flex:none; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+    transition:background .15s;
+  }
+  .score-ctrl input[type="number"]{
+    width:56px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:8px; padding:8px 6px; text-align:center; font-family:'IBM Plex Mono'; font-size:14px;
+  }
+  .metric-ctrl{ display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; min-width:110px; }
+  .metric-ctrl .metric-label{ font-size:11px; letter-spacing:.04em; color:var(--ink-soft); font-weight:600; text-align:center; }
+  .metric-ctrl input[type="number"]{
+    width:60px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+    border-radius:8px; padding:6px; text-align:center; font-family:'IBM Plex Mono'; font-size:13px;
+  }
+
+  /* ============ Property rows (JW Task / Inspecciones) ============ */
+  .prop-block{
+    border:1px solid var(--line); border-radius:12px; background:var(--surface);
+    padding:14px 16px; margin-bottom:12px;
+  }
+  .prop-block-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  .prop-block-name{ font-family:'IBM Plex Mono'; font-size:13px; font-weight:600; color:var(--ink); }
+  .prop-block-name .code{ color:var(--accent-ink); }
+  .prop-block-body{ display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+  .prop-block-body textarea{ flex:1 1 260px; }
+  .hist-toggle{
+    border:1px solid var(--line); background:var(--paper); color:var(--ink-soft);
+    width:28px; height:28px; border-radius:7px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    flex:none; transition:transform .15s;
+  }
+  .hist-toggle.open{ transform:rotate(90deg); color:var(--accent); border-color:var(--accent); }
+  .hist-panel{ display:none; margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); }
+  .hist-panel.open{ display:block; }
+  .hist-row{ display:flex; gap:10px; align-items:baseline; padding:6px 0; font-size:13px; border-bottom:1px solid var(--line); }
+  .hist-row:last-child{ border-bottom:0; }
+  .hist-row .hist-date{ font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--ink-soft); flex:none; width:84px; }
+  .hist-row .hist-dot{ width:22px; height:22px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700; font-family:'Big Shoulders Display'; }
+  .hist-row .hist-text{ color:var(--ink); flex:1; }
+  .hist-row .hist-auditor{ color:var(--ink-soft); font-size:11.5px; }
+  .hist-empty{ color:var(--ink-soft); font-size:13px; padding:6px 0; font-style:italic; }
+
+  .metrics-row{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; background:var(--accent-soft); border-radius:12px; padding:16px; margin:18px 0; }
+
+  .submit-btn{
+    width:100%; border:0; background:var(--accent); color:#fff; font-family:'Public Sans'; font-weight:700;
+    font-size:15px; padding:14px; border-radius:11px; cursor:pointer; margin-top:8px;
+  }
+  .submit-btn:hover{ filter:brightness(1.08); }
+  .submit-btn:disabled{ opacity:.55; cursor:default; }
+  .form-toast{
+    margin-top:14px; padding:12px 16px; border-radius:9px; font-size:13.5px; font-weight:600;
+    background:var(--accent-soft); color:var(--accent-ink); display:none;
+  }
+  .form-toast.show{ display:block; }
+  .form-toast.err{ background:var(--warn-soft); color:var(--warn); }
+
+  /* ============ Dashboard ============ */
+  .dash-wrap{ max-width:1180px; margin:0 auto; padding:24px 24px 80px; }
+  .dash-toolbar{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px; }
+  .dash-toolbar .month-pick{ display:flex; align-items:center; gap:10px; }
+  .dash-toolbar label{ font-size:12px; color:var(--ink-soft); font-weight:600; }
+  .dash-toolbar input[type="month"]{
+    border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px;
+    padding:8px 12px; font-family:'Public Sans'; font-size:13.5px;
+  }
+  .compare-corner{ display:flex; gap:18px; flex-wrap:wrap; }
+  .compare-item{ text-align:right; }
+  .compare-item .c-label{ font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); }
+  .compare-item .c-val{ font-family:'Big Shoulders Display'; font-size:22px; font-weight:700; line-height:1.1; }
+  .compare-item .c-delta{ font-size:11.5px; font-weight:700; }
+  .compare-item .c-delta.up{ color:var(--warn); }
+  .compare-item .c-delta.down{ color:var(--good); }
+  .compare-item .c-delta.flat{ color:var(--ink-soft); }
+
+  .kpi-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:26px; }
+  .kpi-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); }
+  .kpi-card .k-label{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; }
+  .kpi-card .k-val{ font-family:'Big Shoulders Display'; font-size:34px; font-weight:800; margin-top:4px; }
+
+  .top3-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
+  @media (max-width:640px){ .top3-grid{ grid-template-columns:1fr; } }
+  .top3-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); }
+  .top3-card h3{ font-size:15px; font-weight:700; margin-bottom:12px; }
+  .top3-card.best h3{ color:var(--good); }
+  .top3-card.worst h3{ color:var(--warn); }
+  .top3-row{ display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+  .top3-row:last-child{ border-bottom:0; }
+  .top3-rank{ font-family:'Big Shoulders Display'; font-weight:700; color:var(--ink-soft); width:18px; flex:none; }
+  .top3-name{ flex:1; font-weight:600; }
+  .top3-score{ font-family:'IBM Plex Mono'; font-weight:600; }
+
+  .dash-table-wrap{ overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
+  table.dash-table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:720px; }
+  table.dash-table th{
+    text-align:left; padding:12px 14px; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); border-bottom:1px solid var(--line); cursor:pointer; user-select:none; white-space:nowrap;
+  }
+  table.dash-table th.sortable:hover{ color:var(--accent-ink); }
+  table.dash-table th .arrow{ font-size:10px; margin-left:3px; opacity:.6; }
+  table.dash-table td{ padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  table.dash-table tr:last-child td{ border-bottom:0; }
+  table.dash-table .ent-code{ font-family:'Big Shoulders Display'; font-weight:700; font-size:15px; }
+  table.dash-table .ent-lead{ color:var(--ink-soft); font-size:12px; }
+  table.dash-table .score-pill{
+    display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px; border-radius:7px;
+    color:#fff; font-family:'Big Shoulders Display'; font-weight:700; font-size:13px; padding:0 8px;
+  }
+  table.dash-table .count-pill{
+    display:inline-flex; align-items:center; justify-content:center; min-width:26px; height:26px; border-radius:50%;
+    color:#fff; font-family:'IBM Plex Mono'; font-weight:600; font-size:12.5px;
+  }
+</style>
+
+
+<style>
+  .sample-banner{ max-width:1180px; margin:14px auto 0; padding:10px 16px; border-radius:10px; background:var(--gold-soft); color:var(--gold); font-size:13px; font-weight:600; border:1px solid var(--gold); }
+</style>
+</head>
+<body>
+<input type="radio" name="type-filter" id="filter-all" class="filter-radio" value="all" checked>
+<input type="radio" name="type-filter" id="filter-mir" class="filter-radio" value="MIR">
+<input type="radio" name="type-filter" id="filter-dc" class="filter-radio" value="DC">
+
+<header class="top">
+  <div class="mountain-banner">
+    <svg viewBox="0 0 1200 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LDC Zona 3">
+      <defs>
+        <linearGradient id="peakGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#14603F"/>
+          <stop offset="55%" stop-color="#4C8C3B"/>
+          <stop offset="100%" stop-color="#7FB544"/>
+        </linearGradient>
+      </defs>
+      <polyline class="peak" points="10,128 235,34 410,102 640,10 1190,128"
+        fill="none" stroke="url(#peakGrad)" stroke-width="6"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="top-inner">
+    <h1 class="title">LDC</h1>
+    <div class="zona-mid">Zona 3</div>
+    <div class="eyebrow">Gestión de Instalaciones · Salones del Reino</div>
+    <div class="meta-stats">
+      <div class="stat"><div class="n" id="stat-units">28</div><div class="l">Entidades</div></div>
+      <div class="stat"><div class="n" id="stat-props">151</div><div class="l">Propiedades</div></div>
+      <div class="stat"><div class="n">20 ago 2026</div><div class="l">Actualizado</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="app-tabs">
+  <button data-panel="directorio" class="active">Directorio</button>
+  <button data-panel="auditorias">Auditorías</button>
+  <button data-panel="dashboard">Dashboard</button>
+</nav>
+
+<section id="panel-directorio" class="app-panel active">
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-box">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search" type="text" placeholder="Buscar por nombre, unidad o Salón del Reino…">
+    </div>
+    <div class="tabs" id="tabs">
+      <label for="filter-all" data-filter="all">Todos</label>
+      <label for="filter-mir" data-filter="MIR">MIR</label>
+      <label for="filter-dc" data-filter="DC">DC</label>
+    </div>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+      Imprimir
+    </button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="section-head" style="margin-top:36px;">
+    <h2>Representación LDC</h2>
+  </section>
+
+  <div class="lead-card">
+    <div class="lead-head">
+      <h3>Representante LDC · Zona 03 · GI</h3>
+      <span class="role-tag">Representantes en el campo</span>
+    </div>
+    <div class="lead-body">
+      <div class="field-reps">
+        <div class="label">Representantes en el campo</div>
+        <div class="person">Dan Gómez</div>
+        <div class="person">Islena de Gómez</div>
+      </div>
+      <div class="assist-grid">
+        <div class="assist-card">
+          <div class="area">Proyectos y renovaciones · Rutas de proyectos</div>
+          <div class="person">José Alberto Ortega</div>
+          <div class="person">Greisy de Ortega</div>
+        </div>
+        <div class="assist-card">
+          <div class="area">JwTareas y VCM</div>
+          <div class="person">Emirson Rodríguez</div>
+          <div class="person">Maria F. Rodríguez</div>
+        </div>
+        <div class="assist-card">
+          <div class="area">Inspecciones (VEI)</div>
+          <div class="person">Ismael Restrepo</div>
+          <div class="person">Sofía de Restrepo</div>
+        </div>
+      </div>
+    </div>
+    <div class="lead-foot">
+      <span style="font-size:12.5px;color:var(--ink-soft);">Asistentes de los representantes</span>
+      <span class="email">LDC69175@jwpub.org</span>
+    </div>
+  </div>
+
+  <section class="section-head">
+    <h2>Unidades de mantenimiento</h2>
+    <span class="count" id="result-count"></span>
+  </section>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--accent);"></span><b>CM / ECM</b> — Capacitador de Mantenimiento y esposa</span>
+    <span><span class="swatch" style="background:var(--gold);"></span><b>ACM / EACM</b> — Auxiliar de Capacitador de Mantenimiento y esposa</span>
+    <span><span class="swatch" style="background:var(--accent-ink);opacity:.5;"></span><b>MIR</b> — unidad de circuito</span>
+    <span><span class="swatch" style="background:var(--gold);opacity:.6;"></span><b>DC</b> — grupo de construcción</span>
+    <span><span class="swatch" style="background:var(--warn);"></span><b>⚠</b> — lista de distribución repetida, revisar</span>
+  </div>
+
+  <div class="grid" id="grid" style="margin-top:24px;">
+  <article class="card" data-code="MIR23" data-type="MIR" data-search="mir23 ldc691275@jwpub.org adonis rodriguez rosana rodriguez ven0575 · guaremal ven0957 · la macarena ven0194 · calle miquilen ven1222 · macarao">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR23</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691275@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Adonis Rodriguez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Rosana Rodriguez</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (4)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0575</span> · Guaremal</span><span class="prop-tag"><span class="code">VEN0957</span> · La Macarena</span><span class="prop-tag"><span class="code">VEN0194</span> · Calle Miquilén</span><span class="prop-tag"><span class="code">VEN1222</span> · Macarao</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC1" data-type="DC" data-search="dc1 ldc691314@jwpub.org haylan lopez lenys de lopez yorgi bulic dana bulic ven0094 · coche ven0437 · olivet ven0600 · km21 ven0610 · los rosales ven0622 · km7">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC1</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691314@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Haylan López</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Lenys de López</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Yorgi Bulic</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Dana Bulic</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0094</span> · Coche</span><span class="prop-tag"><span class="code">VEN0437</span> · Olivet</span><span class="prop-tag"><span class="code">VEN0600</span> · Km21</span><span class="prop-tag"><span class="code">VEN0610</span> · Los Rosales</span><span class="prop-tag"><span class="code">VEN0622</span> · Km7</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR20" data-type="MIR" data-search="mir20 ldc691425@jwpub.org israel herrera kesia de herrera samuel ochoa karen de ochoa ven1245 · lagunetica ven0958 · romulo gallegos ven0295 · colinas de la mariposa ven0703 · carrizal ven0390 · san jose de los altos ven0135 · san antonio de los altos">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR20</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691425@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Israel Herrera</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Kesia de Herrera</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Samuel Ochoa</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">EACM</span>
+      <span>Karen de Ochoa</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN1245</span> · Lagunetica</span><span class="prop-tag"><span class="code">VEN0958</span> · Rómulo Gallegos</span><span class="prop-tag"><span class="code">VEN0295</span> · Colinas de La Mariposa</span><span class="prop-tag"><span class="code">VEN0703</span> · Carrizal</span><span class="prop-tag"><span class="code">VEN0390</span> · San José de los Altos</span><span class="prop-tag"><span class="code">VEN0135</span> · San Antonio de los Altos</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC3" data-type="DC" data-search="dc3 ldc691322@jwpub.org jimy valecillos maria valecillos ven0618 · monte verde ven0808 · colinas del parque ven0810 · colinas de el junquito ven0813 · luis hurtado">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC3</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691322@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Jimy Valecillos</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>María Valecillos</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (4)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0618</span> · Monte Verde</span><span class="prop-tag"><span class="code">VEN0808</span> · Colinas del Parque</span><span class="prop-tag"><span class="code">VEN0810</span> · Colinas de El Junquito</span><span class="prop-tag"><span class="code">VEN0813</span> · Luis Hurtado</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC4" data-type="DC" data-search="dc4 ldc69194@jwpub.org alejandro valera mariana de valera ven0623 · plan de manzano ven0629 · urdaneta ven0693 · castillito ven0816 · isaias medina angarita ven0818 · la vina ven0830 · nuevo horizonte ven0673 · las flores ciudad caribia">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC4</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC69194@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Alejandro Valera</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Mariana de Valera</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (8)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0623</span> · Plan de Manzano</span><span class="prop-tag"><span class="code">VEN0629</span> · Urdaneta</span><span class="prop-tag"><span class="code">VEN0693</span> · Castillito</span><span class="prop-tag"><span class="code">VEN0816</span> · Isaías Medina Angarita</span><span class="prop-tag"><span class="code">VEN0818</span> · La Viña</span><span class="prop-tag"><span class="code">VEN0830</span> · Nuevo Horizonte</span><span class="prop-tag"><span class="code">VEN0673</span> · Las Flores</span><span class="prop-tag">Ciudad Caribia</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR10" data-type="MIR" data-search="mir10 ldc691428@jwpub.org victor bodie laimile de bodie ven0352 · el turpial ven0353 · gloria margarita ven0671 · el trigo ven0889 · el jarillo ven1296 · san pedro de los altos ven1363 · guareguare">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR10</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691428@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Victor Bodie</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Laimilé de Bodie</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0352</span> · El Turpial</span><span class="prop-tag"><span class="code">VEN0353</span> · Gloria Margarita</span><span class="prop-tag"><span class="code">VEN0671</span> · El Trigo</span><span class="prop-tag"><span class="code">VEN0889</span> · El Jarillo</span><span class="prop-tag"><span class="code">VEN1296</span> · San Pedro de los Altos</span><span class="prop-tag"><span class="code">VEN1363</span> · Guareguare</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC13" data-type="DC" data-search="dc13 ldc691251@jwpub.org eliezer perez nataly perez ven0609 · la vega ven0724 · antimano ven0637 · ruiz pineda ven0823 · los mangos ven0812 · el paraiso ven1257 · el tambor las gardenias">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC13</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691251@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Eliezer Pérez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Nataly Pérez</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (7)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0609</span> · La Vega</span><span class="prop-tag"><span class="code">VEN0724</span> · Antímano</span><span class="prop-tag"><span class="code">VEN0637</span> · Ruiz Pineda</span><span class="prop-tag"><span class="code">VEN0823</span> · Los Mangos</span><span class="prop-tag"><span class="code">VEN0812</span> · El Paraíso</span><span class="prop-tag"><span class="code">VEN1257</span> · El Tambor</span><span class="prop-tag">Las Gardenias</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC5" data-type="DC" data-search="dc5 ldc691337@jwpub.org aduin rodriguez nairobi rodriguez ven0288 · la campina ven1442 · casa 46 ven0596 · calle peru ven0608 · la hacienda ven0821 · los caobos ven1279 · panteon">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC5</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691337@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Aduin Rodriguez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Nairobi Rodriguez</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0288</span> · La Campiña</span><span class="prop-tag"><span class="code">VEN1442</span> · Casa 46</span><span class="prop-tag"><span class="code">VEN0596</span> · Calle Perú</span><span class="prop-tag"><span class="code">VEN0608</span> · La Hacienda</span><span class="prop-tag"><span class="code">VEN0821</span> · Los Caobos</span><span class="prop-tag"><span class="code">VEN1279</span> · Panteón</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR3" data-type="MIR" data-search="mir3 ldc691485@jwpub.org hugo cabrera belkis cabrera ven1338 · el naranjal ven0485 · la eneka ven1528 · el laurel ven1435 · palo negro ven0132 · los algarrobos">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR3</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691485@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Hugo Cabrera</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Belkis Cabrera</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN1338</span> · El Naranjal</span><span class="prop-tag"><span class="code">VEN0485</span> · La Eneka</span><span class="prop-tag"><span class="code">VEN1528</span> · El Laurel</span><span class="prop-tag"><span class="code">VEN1435</span> · Palo Negro</span><span class="prop-tag"><span class="code">VEN0132</span> · Los Algarrobos</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC11" data-type="DC" data-search="dc11 ldc691233@jwpub.org manuel power irani de power ven0497 · garcia carballo ven0811 · boleita ven0631 · la paz ven0825 · telares de palo grande ven0626 · buena vista">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC11</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691233@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Manuel Power</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Irani de Power</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0497</span> · Garcia Carballo</span><span class="prop-tag"><span class="code">VEN0811</span> · Boleita</span><span class="prop-tag"><span class="code">VEN0631</span> · La Paz</span><span class="prop-tag"><span class="code">VEN0825</span> · Telares de Palo Grande</span><span class="prop-tag"><span class="code">VEN0626</span> · Buena Vista</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR16" data-type="MIR" data-search="mir16 ldc691200@jwpub.org luis fernandez carolina de fernandez ven0363 · petare ven0462 · pedregal ven0572 · el llanito ven0587 · altavista ven0630 · 23 de enero">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR16</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691200@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Luis Fernández</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Carolina de Fernández</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0363</span> · Petare</span><span class="prop-tag"><span class="code">VEN0462</span> · Pedregal</span><span class="prop-tag"><span class="code">VEN0572</span> · El Llanito</span><span class="prop-tag"><span class="code">VEN0587</span> · Altavista</span><span class="prop-tag"><span class="code">VEN0630</span> · 23 de Enero</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR18" data-type="MIR" data-search="mir18 ldc691277@jwpub.org oswaldo reyes mailine reyes edison mora irene mora ven0815 · guaicoco ven0828 · filas de mariches ven0840 · carpintero ven1101 · el hatillo ven1278 · araguaney san isidro">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR18</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691277@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Oswaldo Reyes</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Mailine Reyes</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Edison Mora</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Irene Mora</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0815</span> · Guaicoco</span><span class="prop-tag"><span class="code">VEN0828</span> · Filas de Mariches</span><span class="prop-tag"><span class="code">VEN0840</span> · Carpintero</span><span class="prop-tag"><span class="code">VEN1101</span> · El Hatillo</span><span class="prop-tag"><span class="code">VEN1278</span> · Araguaney</span><span class="prop-tag">San Isidro</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="DC2" data-type="DC" data-search="dc2 ldc691556@jwpub.org emanuel tineo paola tineo ven1100 · baruta ven0380 · gavilan ven0590 · bello monte ven0826 · maca ven0831 · obelisco">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">DC2</span>
+          <span class="type-pill DC">DC</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691556@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Emanuel Tineo</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Paola Tineo</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN1100</span> · Baruta</span><span class="prop-tag"><span class="code">VEN0380</span> · Gavilán</span><span class="prop-tag"><span class="code">VEN0590</span> · Bello Monte</span><span class="prop-tag"><span class="code">VEN0826</span> · Maca</span><span class="prop-tag"><span class="code">VEN0831</span> · Obelisco</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR15" data-type="MIR" data-search="mir15 ldc691199@jwpub.org rafael laya patricia laya nathan cardona gladys cardona ismael restrepo sofia restrepo ven0594 · candelaria ven0598 · chacao ven0820 · minas de baruta ven0837 · los castanos ven0839 · turgua">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR15</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691199@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Rafael Laya</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Patricia Laya</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Nathan Cardona</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Gladys Cardona</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Ismael Restrepo</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Sofía Restrepo</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0594</span> · Candelaria</span><span class="prop-tag"><span class="code">VEN0598</span> · Chacao</span><span class="prop-tag"><span class="code">VEN0820</span> · Minas de Baruta</span><span class="prop-tag"><span class="code">VEN0837</span> · Los Castaños</span><span class="prop-tag"><span class="code">VEN0839</span> · Turgua</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR14" data-type="MIR" data-search="mir14 ldc691198@jwpub.org javier alzualde micet alzualde yasbeck cordero katherine cordero luis mendoza ven0668 · mirador ven0741 · turumo ven0817 · la dolorita ven0841 · callejon torres">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR14</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691198@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Javier Alzualde</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Micet Alzualde</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Yasbeck Cordero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">EACM</span>
+      <span>Katherine Cordero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Luis Mendoza</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (4)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0668</span> · Mirador</span><span class="prop-tag"><span class="code">VEN0741</span> · Turumo</span><span class="prop-tag"><span class="code">VEN0817</span> · La Dolorita</span><span class="prop-tag"><span class="code">VEN0841</span> · Callejón Torres</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR12" data-type="MIR" data-search="mir12 ldc691188@jwpub.org carlos quintero ivonne quintero merlwin briceno elis briceno ven0183 · viposa ven0291 · mume ven0359 · araguaney ven0656 · san casimiro">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR12</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691188@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Carlos Quintero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Ivonne Quintero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Merlwin Briceño</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Elis Briceño</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (4)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0183</span> · Viposa</span><span class="prop-tag"><span class="code">VEN0291</span> · Mume</span><span class="prop-tag"><span class="code">VEN0359</span> · Araguaney</span><span class="prop-tag"><span class="code">VEN0656</span> · San Casimiro</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR5" data-type="MIR" data-search="mir5 ldc691140@jwpub.org carlos angarita estilita angarita mario espinoza julmar espinoza ven0126 · la mata ven0653 · san francisco de yare ven0690 · colonia mendoza ven1042 · bello horizonte ven1199 · las casitas">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR5</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691140@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Carlos Angarita</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Estilita Angarita</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Mario Espinoza</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Julmar Espinoza</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (5)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0126</span> · La Mata</span><span class="prop-tag"><span class="code">VEN0653</span> · San Francisco de Yare</span><span class="prop-tag"><span class="code">VEN0690</span> · Colonia Mendoza</span><span class="prop-tag"><span class="code">VEN1042</span> · Bello Horizonte</span><span class="prop-tag"><span class="code">VEN1199</span> · Las Casitas</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR34" data-type="MIR" data-search="mir34 ldc691423@jwpub.org jhon landaeta christian mijares daymar mijares ven0125 · la fila ven0469 · tacata ven0607 · san antonio de cua ven1459 · maitana ven1352 · lecumberry ven1485 · hospedaje del viajante">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR34</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691423@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Jhon Landaeta</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Christian Mijares</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Daymar Mijares</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0125</span> · La Fila</span><span class="prop-tag"><span class="code">VEN0469</span> · Tacata</span><span class="prop-tag"><span class="code">VEN0607</span> · San Antonio de Cua</span><span class="prop-tag"><span class="code">VEN1459</span> · Maitana</span><span class="prop-tag"><span class="code">VEN1352</span> · Lecumberry</span><span class="prop-tag"><span class="code">VEN1485</span> · Hospedaje del viajante</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR31" data-type="MIR" data-search="mir31 ldc691373@jwpub.org miguel salcedo mayerling salcedo eiveer sarabia franyerlis sarabia ven0235 · la tortuga ven0565 · el milagro ven0999 · paraiso del tuy ven1048 · dos lagunas ven1049 · los jardines / la lagunita ven1052 · el rosario / soapire ven1298 · la raiza">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR31</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691373@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Miguel Salcedo</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Mayerling Salcedo</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Eiveer Sarabia</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Franyerlis Sarabia</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (7)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0235</span> · La Tortuga</span><span class="prop-tag"><span class="code">VEN0565</span> · El Milagro</span><span class="prop-tag"><span class="code">VEN0999</span> · Paraíso del Tuy</span><span class="prop-tag"><span class="code">VEN1048</span> · Dos Lagunas</span><span class="prop-tag"><span class="code">VEN1049</span> · Los Jardines / La Lagunita</span><span class="prop-tag"><span class="code">VEN1052</span> · El Rosario / Soapire</span><span class="prop-tag"><span class="code">VEN1298</span> · La Raiza</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR4" data-type="MIR" data-search="mir4 ldc691505@jwpub.org pablo correa thalia correa wladimir vargas rossimar vargas david ytamare hilary itamare yoharwin rivas ven0137 · la estacion ven0357 · parque tuy ven0898 · el palmar de siquire ven0928 · la cabrera ven1202 · las adjuntas ven1472 · hospedaje de viajante ven1490 · quebrada seca ven0124 · urb. chara ven1209 · pueblo nuevo ven1385 · altagracia de la montana ven0223 · portachuelo ven0864 · las mercedes ven0953 · los chaguaramos la magdalena">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR4</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691505@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Pablo Correa</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Thalia Correa</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Wladimir Vargas</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Rossimar Vargas</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>David Ytamare</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Hilary Itamare</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Yoharwin Rivas</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (14)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0137</span> · La Estación</span><span class="prop-tag"><span class="code">VEN0357</span> · Parque Tuy</span><span class="prop-tag"><span class="code">VEN0898</span> · El Palmar de Siquire</span><span class="prop-tag"><span class="code">VEN0928</span> · La Cabrera</span><span class="prop-tag"><span class="code">VEN1202</span> · Las Adjuntas</span><span class="prop-tag"><span class="code">VEN1472</span> · Hospedaje de viajante</span><span class="prop-tag"><span class="code">VEN1490</span> · Quebrada Seca</span><span class="prop-tag"><span class="code">VEN0124</span> · Urb. Chara</span><span class="prop-tag"><span class="code">VEN1209</span> · Pueblo Nuevo</span><span class="prop-tag"><span class="code">VEN1385</span> · Altagracia de La Montaña</span><span class="prop-tag"><span class="code">VEN0223</span> · Portachuelo</span><span class="prop-tag"><span class="code">VEN0864</span> · Las Mercedes</span><span class="prop-tag"><span class="code">VEN0953</span> · Los Chaguaramos</span><span class="prop-tag">La Magdalena</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR11" data-type="MIR" data-search="mir11 ldc691180@jwpub.org emirson rodriguez maria f. rodriguez jose alberto ortega greisy ortega ">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR11</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691180@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Emirson Rodríguez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Maria F. Rodríguez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>José Alberto Ortega</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Greisy Ortega</span>
+    </div></div>
+      
+    </div>
+  </article>
+  <article class="card" data-code="MIR30" data-type="MIR" data-search="mir30 ldc691204@jwpub.org javier sotillet ivmervic sotillet ven0503 · san fernando del guapo cupira">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR30</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691204@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Javier Sotillet</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Ivmervic Sotillet</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (2)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0503</span> · San Fernando del Guapo</span><span class="prop-tag">Cúpira</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR6" data-type="MIR" data-search="mir6 ldc691141@jwpub.org angel fuenmayor ela fuenmayor nelson martinez lediy martinez ven0105 · los bomberos ven0123 · el placer ven0348 · boulevard ven0474 · fapaca ven0922 · barrancas ven1203 · vista hermosa">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR6</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691141@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Angel Fuenmayor</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Ela Fuenmayor</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Nelson Martínez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">EACM</span>
+      <span>Lediy Martínez</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0105</span> · Los Bomberos</span><span class="prop-tag"><span class="code">VEN0123</span> · El Placer</span><span class="prop-tag"><span class="code">VEN0348</span> · Boulevard</span><span class="prop-tag"><span class="code">VEN0474</span> · Fapaca</span><span class="prop-tag"><span class="code">VEN0922</span> · Barrancas</span><span class="prop-tag"><span class="code">VEN1203</span> · Vista Hermosa</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR21" data-type="MIR" data-search="mir21 ldc691168@jwpub.org jorge gonzalez maria a. gonzalez jhon vilchez nereida vilchez saul perez ven0205 · araira ven0720 · el rodeo ven1133 · miraflores ven1283 · el ingenio ven1114 · casarapa ven1120 · la cotara ven1319 · araguita">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR21</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691168@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Jorge González</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>María A. González</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Jhon Vilchez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">EACM</span>
+      <span>Nereida Vilchez</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Saúl Pérez</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (7)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0205</span> · Araira</span><span class="prop-tag"><span class="code">VEN0720</span> · El Rodeo</span><span class="prop-tag"><span class="code">VEN1133</span> · Miraflores</span><span class="prop-tag"><span class="code">VEN1283</span> · El Ingenio</span><span class="prop-tag"><span class="code">VEN1114</span> · Casarapa</span><span class="prop-tag"><span class="code">VEN1120</span> · La Cotara</span><span class="prop-tag"><span class="code">VEN1319</span> · Araguita</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR35" data-type="MIR" data-search="mir35 ldc691427@jwpub.org jonathan rivero erickmar rivero guerine safra desiree safra ven0432 · el portal ven0570 · yanez / yaguapa ven0919 · zumba ven0921 · cupo ven1272 · agua blanca ven1444 · el calao ven1416 · quebrada seca">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR35</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        <div class="warn-flag">⚠ lista repetida</div>
+      </div>
+      <span class="email">LDC691427@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Jonathan Rivero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Erickmar Rivero</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Guerine Safra</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge none">—</span>
+      <span>Desireé Safra</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (7)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0432</span> · El Portal</span><span class="prop-tag"><span class="code">VEN0570</span> · Yánez / Yaguapa</span><span class="prop-tag"><span class="code">VEN0919</span> · Zumba</span><span class="prop-tag"><span class="code">VEN0921</span> · Cupo</span><span class="prop-tag"><span class="code">VEN1272</span> · Agua Blanca</span><span class="prop-tag"><span class="code">VEN1444</span> · El Calao</span><span class="prop-tag"><span class="code">VEN1416</span> · Quebrada Seca</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR17" data-type="MIR" data-search="mir17 ldc691427@jwpub.org mario correa ledixe correa javier segura cheslyn segura ven0130 · las delicias ven0140 · san jose de barlovento ven0478 · coralia ven1299 · tacarigua de la laguna ven1332 · mesa grande ven1542 · la ceiba, higuerote">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR17</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        <div class="warn-flag">⚠ lista repetida</div>
+      </div>
+      <span class="email">LDC691427@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Mario Correa</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Ledixe Correa</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">ACM</span>
+      <span>Javier Segura</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge aux">EACM</span>
+      <span>Cheslyn Segura</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (6)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0130</span> · Las Delicias</span><span class="prop-tag"><span class="code">VEN0140</span> · San José de Barlovento</span><span class="prop-tag"><span class="code">VEN0478</span> · Coralia</span><span class="prop-tag"><span class="code">VEN1299</span> · Tacarigua de la Laguna</span><span class="prop-tag"><span class="code">VEN1332</span> · Mesa Grande</span><span class="prop-tag"><span class="code">VEN1542</span> · La Ceiba, Higuerote</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR27" data-type="MIR" data-search="mir27 ldc691246@jwpub.org eber blanco juliet blanco ven0481 · curiepe ven1166 · mamporal rio negro">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR27</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691246@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Eber Blanco</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Juliet Blanco</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (3)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0481</span> · Curiepe</span><span class="prop-tag"><span class="code">VEN1166</span> · Mamporal</span><span class="prop-tag">Río Negro</span>
+      </div>
+    </div>
+    </div>
+  </article>
+  <article class="card" data-code="MIR29" data-type="MIR" data-search="mir29 ldc691359@jwpub.org isaac sojo gabriela sojo ven0944 · la troja ven1141 · sotillo tapipa">
+    <div class="card-head">
+      <div>
+        <div class="code-wrap">
+          <span class="code">MIR29</span>
+          <span class="type-pill MIR">MIR</span>
+        </div>
+        
+      </div>
+      <span class="email">LDC691359@jwpub.org</span>
+    </div>
+    <div class="card-body">
+      <div class="members">
+    <div class="member-row">
+      <span class="role-badge lead">CM</span>
+      <span>Isaac Sojo</span>
+    </div>
+    <div class="member-row">
+      <span class="role-badge lead">ECM</span>
+      <span>Gabriela Sojo</span>
+    </div></div>
+      
+    <div class="props">
+      <div class="label">Salones del Reino (3)</div>
+      <div class="prop-list">
+        <span class="prop-tag"><span class="code">VEN0944</span> · La Troja</span><span class="prop-tag"><span class="code">VEN1141</span> · Sotillo</span><span class="prop-tag">Tapipa</span>
+      </div>
+    </div>
+    </div>
+  </article>
+</div>
+  <div class="no-results" id="no-results">Sin resultados para esa búsqueda.</div>
+
+  <footer class="page-foot">
+    <span>Fuente: Organigrama · Gestión de instalaciones · Zona 3 (documento original 20 ago 2026)</span>
+    <span>Reorganizado para lectura rápida — unidades duplicadas en el original fueron consolidadas</span>
+  </footer>
+</div>
+</section>
+
+<section id="panel-auditorias" class="app-panel">
+  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones y observaciones mostradas NO son evaluaciones reales.</div></div>
+  <div class="panel-head">
+    <h2>Auditoría de entidad</h2>
+    <p>Registra la evaluación de una entidad. Lo que envíes queda guardado como base de datos y alimenta el Dashboard de rendimiento.</p>
+  </div>
+  <div class="form-wrap">
+    <form id="audit-form">
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="f-auditor">Auditor</label>
+          <select id="f-auditor" required>
+            <option value="" disabled selected>Selecciona quién audita</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-date">Fecha de la evaluación</label>
+          <input type="date" id="f-date" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Tipo de evaluación</label>
+        <div class="type-card-grid" id="f-type-grid"></div>
+        <input type="text" id="f-type-other" placeholder="Especifica el tipo de evaluación…" style="display:none;margin-top:8px;">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-entity">Entidad</label>
+        <select id="f-entity" required>
+          <option value="" disabled selected>Selecciona capacitador / entidad</option>
+        </select>
+      </div>
+
+      <div id="f-dynamic"></div>
+
+      <div class="field">
+        <label class="field-label" for="f-notes">
+          Notas
+          <button type="button" class="hist-toggle" id="notes-hist-toggle" style="float:right;" title="Ver notas anteriores">▸</button>
+        </label>
+        <textarea id="f-notes" placeholder="Observaciones generales…"></textarea>
+        <div class="hist-panel" id="notes-hist-panel"></div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="f-submit">Guardar auditoría</button>
+      <div class="form-toast" id="f-toast"></div>
+    </form>
+  </div>
+</section>
+
+<section id="panel-dashboard" class="app-panel">
+  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones y observaciones mostradas NO son evaluaciones reales.</div></div>
+  <div class="panel-head">
+    <h2>Dashboard de rendimiento</h2>
+    <p>Promedios y retrasos calculados en vivo a partir de las auditorías registradas.</p>
+  </div>
+  <div class="dash-wrap">
+    <div class="dash-toolbar">
+      <div class="month-pick">
+        <label for="dash-month">Mes</label>
+        <input type="month" id="dash-month">
+      </div>
+      <div class="compare-corner" id="dash-compare"></div>
+    </div>
+
+    <div class="kpi-row" id="dash-kpis"></div>
+
+    <div class="top3-grid">
+      <div class="top3-card best">
+        <h3>Top 3 · Mejor puntuación</h3>
+        <div id="dash-top-best"></div>
+      </div>
+      <div class="top3-card worst">
+        <h3>Top 3 · Peor puntuación</h3>
+        <div id="dash-top-worst"></div>
+      </div>
+    </div>
+
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Entidad</th>
+            <th class="sortable" data-sort="score">Promedio<span class="arrow"></span></th>
+            <th class="sortable" data-sort="vcmDelayed">VCM retrasadas<span class="arrow"></span></th>
+            <th class="sortable" data-sort="vcmUnassigned">VCM sin asignar<span class="arrow"></span></th>
+            <th class="sortable" data-sort="tasksDelayed">Tareas retrasadas<span class="arrow"></span></th>
+          </tr>
+        </thead>
+        <tbody id="dash-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<script>
+/* ============================================================
+   DATA
+   ============================================================ */
+const UNITS = [
+  {code:"MIR23",type:"MIR",email:"LDC691275@jwpub.org",members:[["Adonis Rodriguez","CM"],["Rosana Rodriguez","ECM"]],
+    props:["VEN0575 · Guaremal","VEN0957 · La Macarena","VEN0194 · Calle Miquilén","VEN1222 · Macarao"]},
+  {code:"DC1",type:"DC",email:"LDC691314@jwpub.org",members:[["Haylan López","CM"],["Lenys de López","ECM"],["Yorgi Bulic",""],["Dana Bulic",""]],
+    props:["VEN0094 · Coche","VEN0437 · Olivet","VEN0600 · Km21","VEN0610 · Los Rosales","VEN0622 · Km7"]},
+  {code:"MIR20",type:"MIR",email:"LDC691425@jwpub.org",members:[["Israel Herrera","CM"],["Kesia de Herrera","ECM"],["Samuel Ochoa","ACM"],["Karen de Ochoa","EACM"]],
+    props:["VEN1245 · Lagunetica","VEN0958 · Rómulo Gallegos","VEN0295 · Colinas de La Mariposa","VEN0703 · Carrizal","VEN0390 · San José de los Altos","VEN0135 · San Antonio de los Altos"]},
+  {code:"DC3",type:"DC",email:"LDC691322@jwpub.org",members:[["Jimy Valecillos","CM"],["María Valecillos","ECM"]],
+    props:["VEN0618 · Monte Verde","VEN0808 · Colinas del Parque","VEN0810 · Colinas de El Junquito","VEN0813 · Luis Hurtado"]},
+  {code:"DC4",type:"DC",email:"LDC69194@jwpub.org",members:[["Alejandro Valera","CM"],["Mariana de Valera","ECM"]],
+    props:["VEN0623 · Plan de Manzano","VEN0629 · Urdaneta","VEN0693 · Castillito","VEN0816 · Isaías Medina Angarita","VEN0818 · La Viña","VEN0830 · Nuevo Horizonte","VEN0673 · Las Flores","Ciudad Caribia"]},
+  {code:"MIR10",type:"MIR",email:"LDC691428@jwpub.org",members:[["Victor Bodie","CM"],["Laimilé de Bodie","ECM"]],
+    props:["VEN0352 · El Turpial","VEN0353 · Gloria Margarita","VEN0671 · El Trigo","VEN0889 · El Jarillo","VEN1296 · San Pedro de los Altos","VEN1363 · Guareguare"]},
+  {code:"DC13",type:"DC",email:"LDC691251@jwpub.org",members:[["Eliezer Pérez","CM"],["Nataly Pérez","ECM"]],
+    props:["VEN0609 · La Vega","VEN0724 · Antímano","VEN0637 · Ruiz Pineda","VEN0823 · Los Mangos","VEN0812 · El Paraíso","VEN1257 · El Tambor","Las Gardenias"]},
+  {code:"DC5",type:"DC",email:"LDC691337@jwpub.org",members:[["Aduin Rodriguez","CM"],["Nairobi Rodriguez","ECM"]],
+    props:["VEN0288 · La Campiña","VEN1442 · Casa 46","VEN0596 · Calle Perú","VEN0608 · La Hacienda","VEN0821 · Los Caobos","VEN1279 · Panteón"]},
+  {code:"MIR3",type:"MIR",email:"LDC691485@jwpub.org",members:[["Hugo Cabrera","CM"],["Belkis Cabrera","ECM"]],
+    props:["VEN1338 · El Naranjal","VEN0485 · La Eneka","VEN1528 · El Laurel","VEN1435 · Palo Negro","VEN0132 · Los Algarrobos"]},
+  {code:"DC11",type:"DC",email:"LDC691233@jwpub.org",members:[["Manuel Power","CM"],["Irani de Power","ECM"]],
+    props:["VEN0497 · Garcia Carballo","VEN0811 · Boleita","VEN0631 · La Paz","VEN0825 · Telares de Palo Grande","VEN0626 · Buena Vista"]},
+  {code:"MIR16",type:"MIR",email:"LDC691200@jwpub.org",members:[["Luis Fernández","CM"],["Carolina de Fernández","ECM"]],
+    props:["VEN0363 · Petare","VEN0462 · Pedregal","VEN0572 · El Llanito","VEN0587 · Altavista","VEN0630 · 23 de Enero"]},
+  {code:"MIR18",type:"MIR",email:"LDC691277@jwpub.org",members:[["Oswaldo Reyes","CM"],["Mailine Reyes","ECM"],["Edison Mora","CM"],["Irene Mora","ECM"]],
+    props:["VEN0815 · Guaicoco","VEN0828 · Filas de Mariches","VEN0840 · Carpintero","VEN1101 · El Hatillo","VEN1278 · Araguaney","San Isidro"]},
+  {code:"DC2",type:"DC",email:"LDC691556@jwpub.org",members:[["Emanuel Tineo","CM"],["Paola Tineo","ECM"]],
+    props:["VEN1100 · Baruta","VEN0380 · Gavilán","VEN0590 · Bello Monte","VEN0826 · Maca","VEN0831 · Obelisco"]},
+  {code:"MIR15",type:"MIR",email:"LDC691199@jwpub.org",members:[["Rafael Laya","CM"],["Patricia Laya","ECM"],["Nathan Cardona","CM"],["Gladys Cardona","ECM"],["Ismael Restrepo",""],["Sofía Restrepo",""]],
+    props:["VEN0594 · Candelaria","VEN0598 · Chacao","VEN0820 · Minas de Baruta","VEN0837 · Los Castaños","VEN0839 · Turgua"]},
+  {code:"MIR14",type:"MIR",email:"LDC691198@jwpub.org",members:[["Javier Alzualde","CM"],["Micet Alzualde","ECM"],["Yasbeck Cordero","ACM"],["Katherine Cordero","EACM"],["Luis Mendoza","ACM"]],
+    props:["VEN0668 · Mirador","VEN0741 · Turumo","VEN0817 · La Dolorita","VEN0841 · Callejón Torres"]},
+  {code:"MIR12",type:"MIR",email:"LDC691188@jwpub.org",members:[["Carlos Quintero","CM"],["Ivonne Quintero","ECM"],["Merlwin Briceño",""],["Elis Briceño",""]],
+    props:["VEN0183 · Viposa","VEN0291 · Mume","VEN0359 · Araguaney","VEN0656 · San Casimiro"]},
+  {code:"MIR5",type:"MIR",email:"LDC691140@jwpub.org",members:[["Carlos Angarita","CM"],["Estilita Angarita","ECM"],["Mario Espinoza",""],["Julmar Espinoza",""]],
+    props:["VEN0126 · La Mata","VEN0653 · San Francisco de Yare","VEN0690 · Colonia Mendoza","VEN1042 · Bello Horizonte","VEN1199 · Las Casitas"]},
+  {code:"MIR34",type:"MIR",email:"LDC691423@jwpub.org",members:[["Jhon Landaeta","CM"],["Christian Mijares",""],["Daymar Mijares",""]],
+    props:["VEN0125 · La Fila","VEN0469 · Tacata","VEN0607 · San Antonio de Cua","VEN1459 · Maitana","VEN1352 · Lecumberry","VEN1485 · Hospedaje del viajante"]},
+  {code:"MIR31",type:"MIR",email:"LDC691373@jwpub.org",members:[["Miguel Salcedo","CM"],["Mayerling Salcedo","ECM"],["Eiveer Sarabia",""],["Franyerlis Sarabia",""]],
+    props:["VEN0235 · La Tortuga","VEN0565 · El Milagro","VEN0999 · Paraíso del Tuy","VEN1048 · Dos Lagunas","VEN1049 · Los Jardines / La Lagunita","VEN1052 · El Rosario / Soapire","VEN1298 · La Raiza"]},
+  {code:"MIR4",type:"MIR",email:"LDC691505@jwpub.org",members:[["Pablo Correa","CM"],["Thalia Correa","ECM"],["Wladimir Vargas",""],["Rossimar Vargas",""],["David Ytamare",""],["Hilary Itamare",""],["Yoharwin Rivas",""]],
+    props:["VEN0137 · La Estación","VEN0357 · Parque Tuy","VEN0898 · El Palmar de Siquire","VEN0928 · La Cabrera","VEN1202 · Las Adjuntas","VEN1472 · Hospedaje de viajante","VEN1490 · Quebrada Seca","VEN0124 · Urb. Chara","VEN1209 · Pueblo Nuevo","VEN1385 · Altagracia de La Montaña","VEN0223 · Portachuelo","VEN0864 · Las Mercedes","VEN0953 · Los Chaguaramos","La Magdalena"]},
+  {code:"MIR11",type:"MIR",email:"LDC691180@jwpub.org",members:[["Emirson Rodríguez",""],["Maria F. Rodríguez",""],["José Alberto Ortega",""],["Greisy Ortega",""]],
+    props:[]},
+  {code:"MIR30",type:"MIR",email:"LDC691204@jwpub.org",members:[["Javier Sotillet","CM"],["Ivmervic Sotillet","ECM"]],
+    props:["VEN0503 · San Fernando del Guapo","Cúpira"]},
+  {code:"MIR6",type:"MIR",email:"LDC691141@jwpub.org",members:[["Angel Fuenmayor","CM"],["Ela Fuenmayor","ECM"],["Nelson Martínez","ACM"],["Lediy Martínez","EACM"]],
+    props:["VEN0105 · Los Bomberos","VEN0123 · El Placer","VEN0348 · Boulevard","VEN0474 · Fapaca","VEN0922 · Barrancas","VEN1203 · Vista Hermosa"]},
+  {code:"MIR21",type:"MIR",email:"LDC691168@jwpub.org",members:[["Jorge González","CM"],["María A. González","ECM"],["Jhon Vilchez","ACM"],["Nereida Vilchez","EACM"],["Saúl Pérez","ACM"]],
+    props:["VEN0205 · Araira","VEN0720 · El Rodeo","VEN1133 · Miraflores","VEN1283 · El Ingenio","VEN1114 · Casarapa","VEN1120 · La Cotara","VEN1319 · Araguita"]},
+  {code:"MIR35",type:"MIR",email:"LDC691427@jwpub.org",dupe:true,members:[["Jonathan Rivero","CM"],["Erickmar Rivero","ECM"],["Guerine Safra","CM"],["Desireé Safra",""]],
+    props:["VEN0432 · El Portal","VEN0570 · Yánez / Yaguapa","VEN0919 · Zumba","VEN0921 · Cupo","VEN1272 · Agua Blanca","VEN1444 · El Calao","VEN1416 · Quebrada Seca"]},
+  {code:"MIR17",type:"MIR",email:"LDC691427@jwpub.org",dupe:true,members:[["Mario Correa","CM"],["Ledixe Correa","ECM"],["Javier Segura","ACM"],["Cheslyn Segura","EACM"]],
+    props:["VEN0130 · Las Delicias","VEN0140 · San José de Barlovento","VEN0478 · Coralia","VEN1299 · Tacarigua de la Laguna","VEN1332 · Mesa Grande","VEN1542 · La Ceiba, Higuerote"]},
+  {code:"MIR27",type:"MIR",email:"LDC691246@jwpub.org",members:[["Eber Blanco","CM"],["Juliet Blanco","ECM"]],
+    props:["VEN0481 · Curiepe","VEN1166 · Mamporal","Río Negro"]},
+  {code:"MIR29",type:"MIR",email:"LDC691359@jwpub.org",members:[["Isaac Sojo","CM"],["Gabriela Sojo","ECM"]],
+    props:["VEN0944 · La Troja","VEN1141 · Sotillo","Tapipa"]},
+];
+
+UNITS.forEach(u=>{
+  const lead = u.members.find(m=>m[1]==="CM") || u.members[0] || ["—"];
+  u.leadName = lead[0];
+  u.propsParsed = u.props.map(p=>{
+    const parts = p.split(" · ");
+    return parts.length===2 ? {code:parts[0], name:parts[1]} : {code:null, name:p};
+  });
+});
+const UNIT_BY_CODE = Object.fromEntries(UNITS.map(u=>[u.code,u]));
+
+const AUDITORS = [
+  "Dan Gómez","Islena de Gómez",
+  "José Alberto Ortega","Greisy de Ortega",
+  "Emirson Rodríguez","Maria F. Rodríguez",
+  "Ismael Restrepo","Sofía de Restrepo",
+];
+
+const EVAL_TYPES = [
+  {value:"proyectos", label:"Gestión de proyectos"},
+  {value:"jwtask", label:"JW Task"},
+  {value:"inspecciones", label:"Inspecciones"},
+  {value:"capacitacion", label:"Capacitación especial"},
+  {value:"otros", label:"Otros"},
+];
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function normalize(s){
+  return s.normalize("NFD").replace(/\p{Mn}/gu,"").toLowerCase();
+}
+
+function scoreColor(v){
+  v = Math.max(1, Math.min(10, Number(v)||1));
+  let hue;
+  if (v <= 5) hue = (v-1)/4 * 55;
+  else hue = 55 + (v-5)/5 * 65;
+  return `hsl(${hue.toFixed(0)}, 68%, 42%)`;
+}
+function severityColor(n){
+  const capped = Math.max(0, Math.min(Number(n)||0, 8));
+  const hue = Math.max(0, 120 - capped*16);
+  return `hsl(${hue.toFixed(0)}, 60%, 42%)`;
+}
+function monthOf(dateStr){ return (dateStr||"").slice(0,7); }
+function prevMonth(m){
+  const [y,mo] = m.split("-").map(Number);
+  const d = new Date(Date.UTC(y, mo-1, 1));
+  d.setUTCMonth(d.getUTCMonth()-1);
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,"0")}`;
+}
+function fmtMonth(m){
+  const [y,mo] = m.split("-").map(Number);
+  const names=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return `${names[mo-1]} ${y}`;
+}
+function fmtDate(d){
+  if(!d) return "—";
+  const [y,mo,day] = d.split("-");
+  const names=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  return `${day} ${names[Number(mo)-1]}`;
+}
+function escapeHtml(s){
+  return String(s||"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ============================================================
+   APP TABS
+   ============================================================ */
+const appTabs = document.querySelectorAll(".app-tabs button");
+const appPanels = {
+  directorio: document.getElementById("panel-directorio"),
+  auditorias: document.getElementById("panel-auditorias"),
+  dashboard: document.getElementById("panel-dashboard"),
+};
+appTabs.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    appTabs.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    Object.entries(appPanels).forEach(([key, panel])=>{
+      panel.classList.toggle("active", key===btn.dataset.panel);
+    });
+    if(btn.dataset.panel==="dashboard") refreshDashboard();
+  });
+});
+
+/* ============================================================
+   DIRECTORIO (search + MIR/DC filter) — unchanged behavior
+   ============================================================ */
+(function initDirectorio(){
+  const TOTAL_UNITS = UNITS.length;
+  const searchInput = document.getElementById("search");
+  const typeRadios = document.querySelectorAll('input[name="type-filter"]');
+  const noResults = document.getElementById("no-results");
+  const resultCount = document.getElementById("result-count");
+
+  function currentType(){
+    const checked = document.querySelector('input[name="type-filter"]:checked');
+    return checked ? checked.value : "all";
+  }
+  function applyFilter(){
+    const q = normalize(searchInput.value.trim());
+    const activeType = currentType();
+    let visible = 0;
+    document.querySelectorAll(".card").forEach(card=>{
+      const matchesType = activeType==="all" || card.dataset.type===activeType;
+      const matchesQuery = !q || card.dataset.search.includes(q);
+      const show = matchesType && matchesQuery;
+      card.style.display = show ? "" : "none";
+      if(show) visible++;
+    });
+    noResults.classList.toggle("show", visible===0);
+    resultCount.textContent = q || activeType!=="all" ? `${visible} de ${TOTAL_UNITS}` : "";
+  }
+  searchInput.addEventListener("input", applyFilter);
+  typeRadios.forEach(r=> r.addEventListener("change", applyFilter));
+  applyFilter();
+})();
+
+/* ============================================================
+   EXAMPLE DATA — seeds the Auditorías/Dashboard demo so it opens
+   populated. Marked clearly as examples; real submissions (and,
+   where the DB capability is reachable, the shared database) take
+   over from here.
+   ============================================================ */
+const EXAMPLE_AUDITS = [
+  {id:"ex1", auditor:"José Alberto Ortega", date:"2026-09-05", type:"jwtask", entityCode:"MIR23", month:"2026-09",
+    propertyScores:{"VEN0575":{score:8,obs:"Buen mantenimiento general"},"VEN0957":{score:6,obs:"Falta pintura en fachada"}},
+    tasksDelayed:2, vcmDelayed:1, vcmUnassigned:0, notes:"Revisar pintura en la próxima visita."},
+  {id:"ex2", auditor:"Ismael Restrepo", date:"2026-09-10", type:"inspecciones", entityCode:"DC1", month:"2026-09",
+    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0437":{score:7,obs:"Jardín necesita poda"}}, notes:""},
+  {id:"ex3", auditor:"Greisy de Ortega", date:"2026-09-12", type:"proyectos", entityCode:"DC4", month:"2026-09",
+    projectScore:9, notes:"Proyecto de techo avanza bien."},
+  {id:"ex4", auditor:"Maria F. Rodríguez", date:"2026-09-15", type:"jwtask", entityCode:"MIR3", month:"2026-09",
+    propertyScores:{"VEN1338":{score:4,obs:"Aire acondicionado dañado"},"VEN0485":{score:5,obs:"Pendiente revisión eléctrica"}},
+    tasksDelayed:5, vcmDelayed:3, vcmUnassigned:2, notes:"Prioridad alta."},
+  {id:"ex5", auditor:"Sofía de Restrepo", date:"2026-09-18", type:"inspecciones", entityCode:"MIR16", month:"2026-09",
+    propertyInspection:{"VEN0363":{score:8,obs:"Bien"},"VEN0462":{score:8,obs:"Bien"}}, notes:""},
+  {id:"ex6", auditor:"Emirson Rodríguez", date:"2026-09-20", type:"jwtask", entityCode:"MIR6", month:"2026-09",
+    propertyScores:{"VEN0105":{score:7,obs:"OK"},"VEN0123":{score:6,obs:"Falta limpieza de jardín"}},
+    tasksDelayed:1, vcmDelayed:0, vcmUnassigned:1, notes:""},
+  {id:"ex7", auditor:"José Alberto Ortega", date:"2026-10-02", type:"jwtask", entityCode:"MIR23", month:"2026-10",
+    propertyScores:{"VEN0575":{score:9,obs:"Pintura ya resuelta, muy buen estado"},"VEN0957":{score:9,obs:"Mejoró notablemente"}},
+    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Excelente seguimiento del capacitador."},
+  {id:"ex8", auditor:"Dan Gómez", date:"2026-10-05", type:"jwtask", entityCode:"MIR23", month:"2026-10",
+    propertyScores:{"VEN0194":{score:8,obs:"Bien"},"VEN1222":{score:9,obs:"Muy bien cuidado"}},
+    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Confirmo lo registrado por José Alberto."},
+  {id:"ex9", auditor:"Ismael Restrepo", date:"2026-10-03", type:"inspecciones", entityCode:"DC1", month:"2026-10",
+    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0600":{score:8,obs:"Bien, revisar iluminación exterior"}}, notes:""},
+  {id:"ex10", auditor:"Islena de Gómez", date:"2026-10-04", type:"proyectos", entityCode:"DC4", month:"2026-10",
+    projectScore:9, notes:"Avance 80% del proyecto de techo."},
+  {id:"ex11", auditor:"Maria F. Rodríguez", date:"2026-10-06", type:"jwtask", entityCode:"MIR3", month:"2026-10",
+    propertyScores:{"VEN1338":{score:5,obs:"Aire acondicionado sigue pendiente de repuesto"},"VEN1528":{score:7,obs:"Bien"}},
+    tasksDelayed:4, vcmDelayed:2, vcmUnassigned:2, notes:"Seguimos esperando el repuesto del proveedor."},
+  {id:"ex12", auditor:"Sofía de Restrepo", date:"2026-10-08", type:"inspecciones", entityCode:"MIR16", month:"2026-10",
+    propertyInspection:{"VEN0363":{score:9,obs:"Muy bien"},"VEN0572":{score:7,obs:"Falta mantenimiento de jardín"}}, notes:""},
+  {id:"ex13", auditor:"Emirson Rodríguez", date:"2026-10-09", type:"jwtask", entityCode:"MIR6", month:"2026-10",
+    propertyScores:{"VEN0105":{score:8,obs:"Mejoró"},"VEN0348":{score:9,obs:"Excelente"}},
+    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Gran avance este mes."},
+  {id:"ex14", auditor:"Greisy de Ortega", date:"2026-10-10", type:"jwtask", entityCode:"MIR21", month:"2026-10",
+    propertyScores:{"VEN0205":{score:3,obs:"Varias tareas sin completar"},"VEN0720":{score:4,obs:"Falta seguimiento"}},
+    tasksDelayed:6, vcmDelayed:4, vcmUnassigned:3, notes:"Requiere atención urgente del representante."},
+  {id:"ex15", auditor:"José Alberto Ortega", date:"2026-10-11", type:"inspecciones", entityCode:"DC11", month:"2026-10",
+    propertyInspection:{"VEN0497":{score:6,obs:"Regular, revisar techo"},"VEN0811":{score:7,obs:"Bien"}}, notes:""},
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let DB = null;
+let AUDITS = EXAMPLE_AUDITS.slice();
+let selectedType = null;
+let dashSort = {key:"vcmDelayed", dir:"desc"};
+
+async function initDb(){
+  try{
+    if(window.claude && typeof window.claude.use === "function"){
+      DB = await window.claude.use("db");
+    }
+  }catch(e){ DB = null; }
+}
+async function loadAuditsFromDb(){
+  if(!DB) return AUDITS;
+  try{
+    const snap = await DB.collection("audits").limit(500).get();
+    const docs = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    return docs.length ? docs : AUDITS;
+  }catch(e){
+    console.error("db read failed", e);
+    return AUDITS;
+  }
+}
+
+/* ============================================================
+   AUDIT FORM
+   ============================================================ */
+function renderDynamicSection(typeVal, entityCode){
+  const container = document.getElementById("f-dynamic");
+  if(!typeVal || !entityCode){ container.innerHTML=""; return; }
+  const unit = UNIT_BY_CODE[entityCode];
+
+  if(typeVal==="proyectos"){
+    container.innerHTML = `
+      <div class="field">
+        <label class="field-label">Puntuación del proyecto (1–10)</label>
+        <div class="score-ctrl">
+          <select id="proj-score">
+            <option value="" disabled selected>—</option>
+            ${[1,2,3,4,5,6,7,8,9,10].map(n=>`<option value="${n}">${n}</option>`).join("")}
+          </select>
+          <div class="score-dot" id="proj-score-dot">–</div>
+        </div>
+      </div>`;
+    const sel = document.getElementById("proj-score");
+    const dot = document.getElementById("proj-score-dot");
+    sel.addEventListener("change", ()=>{
+      dot.textContent = sel.value || "–";
+      dot.style.background = sel.value ? scoreColor(sel.value) : "";
+    });
+    return;
+  }
+
+  if(typeVal==="jwtask" || typeVal==="inspecciones"){
+    if(!unit || !unit.propsParsed.length){
+      container.innerHTML = '<p class="hist-empty">Esta entidad no tiene Salones del Reino registrados.</p>';
+      return;
+    }
+    const scoreLabel = typeVal==="jwtask" ? "Condición" : "Nivel de inspección";
+    const field = typeVal==="jwtask" ? "propertyScores" : "propertyInspection";
+
+    let html = unit.propsParsed.map(p=>{
+      const key = p.code || p.name;
+      return `
+      <div class="prop-block" data-prop="${escapeHtml(key)}">
+        <div class="prop-block-head">
+          <div class="prop-block-name">${p.code?`<span class="code">${escapeHtml(p.code)}</span> `:""}${escapeHtml(p.name)}</div>
+          <button type="button" class="hist-toggle" data-hist-prop="${escapeHtml(key)}" title="Ver historial">▸</button>
+        </div>
+        <div class="prop-block-body">
+          <textarea data-obs placeholder="Observaciones…"></textarea>
+          <div>
+            <div class="metric-label" style="margin-bottom:6px;">${scoreLabel}</div>
+            <div class="score-ctrl">
+              <input type="number" min="1" max="10" data-score placeholder="1-10">
+              <div class="score-dot">–</div>
+            </div>
+          </div>
+        </div>
+        <div class="hist-panel"></div>
+      </div>`;
+    }).join("");
+
+    if(typeVal==="jwtask"){
+      html += `
+      <div class="metrics-row">
+        <div class="metric-ctrl">
+          <div class="metric-label">Tareas retrasadas (mes)</div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-tasks" value="0"><div class="score-dot" id="m-tasks-dot">0</div></div>
+        </div>
+        <div class="metric-ctrl">
+          <div class="metric-label">VCMs retrasadas</div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-vcmdelay" value="0"><div class="score-dot" id="m-vcmdelay-dot">0</div></div>
+        </div>
+        <div class="metric-ctrl">
+          <div class="metric-label">VCMs sin asignar</div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-vcmunassigned" value="0"><div class="score-dot" id="m-vcmunassigned-dot">0</div></div>
+        </div>
+      </div>`;
+    }
+
+    container.innerHTML = html;
+
+    container.querySelectorAll(".prop-block").forEach(block=>{
+      const input = block.querySelector("[data-score]");
+      const dot = block.querySelector(".score-dot");
+      input.addEventListener("input", ()=>{
+        if(input.value){ dot.textContent = input.value; dot.style.background = scoreColor(input.value); }
+        else { dot.textContent = "–"; dot.style.background = ""; }
+      });
+    });
+
+    container.querySelectorAll("[data-hist-prop]").forEach(btn=>{
+      const propKey = btn.dataset.histProp;
+      const panel = btn.closest(".prop-block").querySelector(".hist-panel");
+      btn.addEventListener("click", ()=>{
+        const isOpen = panel.classList.toggle("open");
+        btn.classList.toggle("open", isOpen);
+        if(isOpen){
+          const entries = AUDITS
+            .filter(a=> a.entityCode===entityCode && a[field] && a[field][propKey])
+            .sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+          panel.innerHTML = entries.length ? entries.map(a=>{
+            const rec = a[field][propKey];
+            return `<div class="hist-row">
+              <span class="hist-date">${fmtDate(a.date)}</span>
+              <span class="hist-dot" style="background:${scoreColor(rec.score)}">${rec.score ?? "–"}</span>
+              <span class="hist-text">${escapeHtml(rec.obs || "—")}</span>
+              <span class="hist-auditor">${escapeHtml(a.auditor)}</span>
+            </div>`;
+          }).join("") : '<div class="hist-empty">Sin historial previo para este Salón.</div>';
+        }
+      });
+    });
+
+    if(typeVal==="jwtask"){
+      [["m-tasks","m-tasks-dot"],["m-vcmdelay","m-vcmdelay-dot"],["m-vcmunassigned","m-vcmunassigned-dot"]].forEach(([inputId,dotId])=>{
+        const input = document.getElementById(inputId);
+        const dot = document.getElementById(dotId);
+        const update = ()=>{ dot.textContent = input.value || "0"; dot.style.background = severityColor(input.value||0); };
+        input.addEventListener("input", update);
+        update();
+      });
+    }
+    return;
+  }
+
+  container.innerHTML = "";
+}
+
+function wireForm(){
+  const auditorSel = document.getElementById("f-auditor");
+  AUDITORS.forEach(name=>{
+    const opt = document.createElement("option");
+    opt.value = name; opt.textContent = name;
+    auditorSel.appendChild(opt);
+  });
+
+  document.getElementById("f-date").valueAsDate = new Date();
+
+  const typeGrid = document.getElementById("f-type-grid");
+  EVAL_TYPES.forEach(t=>{
+    const card = document.createElement("div");
+    card.className = "type-card";
+    card.textContent = t.label;
+    card.dataset.value = t.value;
+    card.addEventListener("click", ()=>{
+      selectedType = t.value;
+      typeGrid.querySelectorAll(".type-card").forEach(c=>c.classList.remove("active"));
+      card.classList.add("active");
+      document.getElementById("f-type-other").style.display = t.value==="otros" ? "block" : "none";
+      renderDynamicSection(selectedType, document.getElementById("f-entity").value);
+    });
+    typeGrid.appendChild(card);
+  });
+
+  const entitySel = document.getElementById("f-entity");
+  UNITS.forEach(u=>{
+    const opt = document.createElement("option");
+    opt.value = u.code;
+    opt.textContent = `${u.leadName} — ${u.code}`;
+    entitySel.appendChild(opt);
+  });
+  entitySel.addEventListener("change", ()=>{
+    renderDynamicSection(selectedType, entitySel.value);
+  });
+
+  document.getElementById("notes-hist-toggle").addEventListener("click", function(){
+    const panel = document.getElementById("notes-hist-panel");
+    const isOpen = panel.classList.toggle("open");
+    this.classList.toggle("open", isOpen);
+    if(isOpen){
+      const entityCode = entitySel.value;
+      const entries = AUDITS
+        .filter(a=> a.entityCode===entityCode && a.notes && a.notes.trim())
+        .sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+      panel.innerHTML = entries.length ? entries.map(a=>{
+        const typeLabel = (EVAL_TYPES.find(t=>t.value===a.type)||{}).label || a.type;
+        return `<div class="hist-row">
+          <span class="hist-date">${fmtDate(a.date)}</span>
+          <span class="hist-text">${escapeHtml(a.notes)}</span>
+          <span class="hist-auditor">${escapeHtml(a.auditor)} · ${escapeHtml(typeLabel)}</span>
+        </div>`;
+      }).join("") : '<div class="hist-empty">Sin notas previas para esta entidad.</div>';
+    }
+  });
+
+  document.getElementById("audit-form").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const toast = document.getElementById("f-toast");
+    const submitBtn = document.getElementById("f-submit");
+    const auditor = auditorSel.value;
+    const date = document.getElementById("f-date").value;
+    const entityCode = entitySel.value;
+
+    if(!auditor || !date || !selectedType || !entityCode){
+      toast.textContent = "Completa auditor, fecha, tipo de evaluación y entidad.";
+      toast.className = "form-toast err show";
+      return;
+    }
+
+    const record = {
+      auditor, date, type: selectedType,
+      typeOtherText: selectedType==="otros" ? document.getElementById("f-type-other").value.trim() : "",
+      entityCode, month: monthOf(date),
+      notes: document.getElementById("f-notes").value.trim(),
+      createdAt: new Date().toISOString(),
+    };
+
+    if(selectedType==="proyectos"){
+      const sel = document.getElementById("proj-score");
+      record.projectScore = sel && sel.value ? Number(sel.value) : null;
+    } else if(selectedType==="jwtask"){
+      record.propertyScores = {};
+      document.querySelectorAll("#f-dynamic .prop-block").forEach(block=>{
+        const key = block.dataset.prop;
+        const scoreVal = block.querySelector("[data-score]").value;
+        const obsVal = block.querySelector("[data-obs]").value.trim();
+        if(scoreVal || obsVal) record.propertyScores[key] = {score: scoreVal?Number(scoreVal):null, obs: obsVal};
+      });
+      record.tasksDelayed = Number(document.getElementById("m-tasks").value)||0;
+      record.vcmDelayed = Number(document.getElementById("m-vcmdelay").value)||0;
+      record.vcmUnassigned = Number(document.getElementById("m-vcmunassigned").value)||0;
+    } else if(selectedType==="inspecciones"){
+      record.propertyInspection = {};
+      document.querySelectorAll("#f-dynamic .prop-block").forEach(block=>{
+        const key = block.dataset.prop;
+        const scoreVal = block.querySelector("[data-score]").value;
+        const obsVal = block.querySelector("[data-obs]").value.trim();
+        if(scoreVal || obsVal) record.propertyInspection[key] = {score: scoreVal?Number(scoreVal):null, obs: obsVal};
+      });
+    }
+
+    submitBtn.disabled = true; submitBtn.textContent = "Guardando…";
+    try{
+      if(DB){
+        const ref = await DB.collection("audits").add(record);
+        record.id = ref.id;
+      } else {
+        record.id = "local-" + Date.now();
+      }
+      AUDITS.push(record);
+      toast.textContent = DB ? "Auditoría guardada en la base de datos." : "Auditoría guardada para esta sesión (sin conexión a la base de datos compartida).";
+      toast.className = "form-toast show";
+      e.target.reset();
+      selectedType = null;
+      typeGrid.querySelectorAll(".type-card").forEach(c=>c.classList.remove("active"));
+      document.getElementById("f-type-other").style.display = "none";
+      document.getElementById("f-dynamic").innerHTML = "";
+      document.getElementById("f-date").valueAsDate = new Date();
+      if(appPanels.dashboard.classList.contains("active")) rerenderDashboard();
+    }catch(err){
+      toast.textContent = "No se pudo guardar: " + (err.message || "error desconocido");
+      toast.className = "form-toast err show";
+    }finally{
+      submitBtn.disabled = false; submitBtn.textContent = "Guardar auditoría";
+    }
+  });
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function computeMonthStats(month){
+  const perEntity = {};
+  UNITS.forEach(u=> perEntity[u.code] = {scores:[], latestJwTaskDate:null, tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0});
+  AUDITS.filter(a=>a.month===month).forEach(a=>{
+    const b = perEntity[a.entityCode];
+    if(!b) return;
+    if(a.type==="proyectos" && typeof a.projectScore==="number") b.scores.push(a.projectScore);
+    if(a.type==="jwtask"){
+      if(a.propertyScores) Object.values(a.propertyScores).forEach(r=>{ if(typeof r.score==="number") b.scores.push(r.score); });
+      if(!b.latestJwTaskDate || a.date > b.latestJwTaskDate){
+        b.latestJwTaskDate = a.date;
+        b.tasksDelayed = a.tasksDelayed||0;
+        b.vcmDelayed = a.vcmDelayed||0;
+        b.vcmUnassigned = a.vcmUnassigned||0;
+      }
+    }
+    if(a.type==="inspecciones" && a.propertyInspection) Object.values(a.propertyInspection).forEach(r=>{ if(typeof r.score==="number") b.scores.push(r.score); });
+  });
+  const rows = UNITS.map(u=>{
+    const b = perEntity[u.code];
+    const score = b.scores.length ? b.scores.reduce((s,n)=>s+n,0)/b.scores.length : null;
+    return {code:u.code, leadName:u.leadName, type:u.type, score, tasksDelayed:b.tasksDelayed, vcmDelayed:b.vcmDelayed, vcmUnassigned:b.vcmUnassigned};
+  });
+  const totals = rows.reduce((acc,r)=>({
+    tasksDelayed: acc.tasksDelayed + (r.tasksDelayed||0),
+    vcmDelayed: acc.vcmDelayed + (r.vcmDelayed||0),
+    vcmUnassigned: acc.vcmUnassigned + (r.vcmUnassigned||0),
+  }), {tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0});
+  return {rows, totals};
+}
+
+function renderKpis(totals){
+  document.getElementById("dash-kpis").innerHTML = `
+    <div class="kpi-card"><div class="k-label">Tareas retrasadas (total)</div><div class="k-val">${totals.tasksDelayed}</div></div>
+    <div class="kpi-card"><div class="k-label">VCMs retrasadas (total)</div><div class="k-val">${totals.vcmDelayed}</div></div>
+    <div class="kpi-card"><div class="k-label">VCMs sin asignar (total)</div><div class="k-val">${totals.vcmUnassigned}</div></div>`;
+}
+
+function renderCompare(totals, prevTotals){
+  const items = [
+    {label:"Tareas retrasadas", cur:totals.tasksDelayed, prev:prevTotals.tasksDelayed},
+    {label:"VCM retrasadas", cur:totals.vcmDelayed, prev:prevTotals.vcmDelayed},
+    {label:"VCM sin asignar", cur:totals.vcmUnassigned, prev:prevTotals.vcmUnassigned},
+  ];
+  document.getElementById("dash-compare").innerHTML = items.map(it=>{
+    const diff = it.cur - it.prev;
+    const cls = diff>0 ? "up" : diff<0 ? "down" : "flat";
+    const arrow = diff>0 ? "▲" : diff<0 ? "▼" : "—";
+    return `<div class="compare-item">
+      <div class="c-label">${it.label}</div>
+      <div class="c-val">${it.cur}</div>
+      <div class="c-delta ${cls}">${arrow} ${diff===0 ? "sin cambio" : Math.abs(diff)+" vs. mes anterior"}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderTop3(rows){
+  const withData = rows.filter(r=>r.score!=null);
+  const best = [...withData].sort((a,b)=>b.score-a.score).slice(0,3);
+  const worst = [...withData].sort((a,b)=>a.score-b.score).slice(0,3);
+  const render = (list)=> list.length ? list.map((r,i)=>`
+    <div class="top3-row">
+      <span class="top3-rank">${i+1}</span>
+      <span class="top3-name">${r.code} · ${escapeHtml(r.leadName)}</span>
+      <span class="top3-score" style="color:${scoreColor(r.score)}">${r.score.toFixed(1)}</span>
+    </div>`).join("") : '<div class="hist-empty">Sin datos este mes.</div>';
+  document.getElementById("dash-top-best").innerHTML = render(best);
+  document.getElementById("dash-top-worst").innerHTML = render(worst);
+}
+
+function renderTable(rows){
+  const sorted = [...rows].sort((a,b)=>{
+    let av = a[dashSort.key], bv = b[dashSort.key];
+    av = av==null ? -1 : av; bv = bv==null ? -1 : bv;
+    return dashSort.dir==="desc" ? (bv-av) : (av-bv);
+  });
+  document.querySelectorAll("table.dash-table th.sortable").forEach(th=>{
+    const arrow = th.querySelector(".arrow");
+    arrow.textContent = th.dataset.sort===dashSort.key ? (dashSort.dir==="desc" ? "▼" : "▲") : "";
+  });
+  document.getElementById("dash-tbody").innerHTML = sorted.map(r=>`
+    <tr>
+      <td><div class="ent-code">${r.code}</div><div class="ent-lead">${escapeHtml(r.leadName)}</div></td>
+      <td>${r.score!=null ? `<span class="score-pill" style="background:${scoreColor(r.score)}">${r.score.toFixed(1)}</span>` : '<span style="color:var(--ink-soft);">—</span>'}</td>
+      <td><span class="count-pill" style="background:${severityColor(r.vcmDelayed)}">${r.vcmDelayed}</span></td>
+      <td><span class="count-pill" style="background:${severityColor(r.vcmUnassigned)}">${r.vcmUnassigned}</span></td>
+      <td><span class="count-pill" style="background:${severityColor(r.tasksDelayed)}">${r.tasksDelayed}</span></td>
+    </tr>`).join("");
+}
+
+function rerenderDashboard(){
+  const month = document.getElementById("dash-month").value;
+  if(!month) return;
+  const {rows, totals} = computeMonthStats(month);
+  const {totals: prevTotals} = computeMonthStats(prevMonth(month));
+  renderKpis(totals);
+  renderCompare(totals, prevTotals);
+  renderTop3(rows);
+  renderTable(rows);
+}
+
+async function refreshDashboard(){
+  AUDITS = await loadAuditsFromDb();
+  rerenderDashboard();
+}
+
+function wireDashboard(){
+  const monthInput = document.getElementById("dash-month");
+  const today = new Date();
+  monthInput.value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
+  monthInput.addEventListener("change", rerenderDashboard);
+
+  document.querySelectorAll("table.dash-table th.sortable").forEach(th=>{
+    th.addEventListener("click", ()=>{
+      const key = th.dataset.sort;
+      dashSort = {key, dir: (dashSort.key===key && dashSort.dir==="desc") ? "asc" : "desc"};
+      renderTable(computeMonthStats(monthInput.value).rows);
+    });
+  });
+
+  rerenderDashboard();
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+wireForm();
+wireDashboard();
+(async function bootData(){
+  await initDb();
+  const fromDb = await loadAuditsFromDb();
+  AUDITS = fromDb;
+  if(appPanels.dashboard.classList.contains("active")) rerenderDashboard();
+})();
+
+</script>
+</body>
+</html>
