@@ -248,7 +248,7 @@
   }
 </style>
 <style>
-  /* ============ App tabs (Directorio / Auditorías / Dashboard) ============ */
+  /* ============ App tabs (Directorio / Auditorías / Seguimiento) ============ */
   .app-tabs{
     position:sticky; top:0; z-index:30;
     background:var(--paper); border-bottom:1px solid var(--line);
@@ -351,61 +351,56 @@
   .form-toast.show{ display:block; }
   .form-toast.err{ background:var(--warn-soft); color:var(--warn); }
 
-  /* ============ Dashboard ============ */
-  .dash-wrap{ max-width:1180px; margin:0 auto; padding:24px 24px 80px; }
-  .dash-toolbar{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px; }
-  .dash-toolbar .month-pick{ display:flex; align-items:center; gap:10px; }
-  .dash-toolbar label{ font-size:12px; color:var(--ink-soft); font-weight:600; }
-  .dash-toolbar input[type="month"]{
-    border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px;
-    padding:8px 12px; font-family:'Public Sans'; font-size:13.5px;
-  }
-  .compare-corner{ display:flex; gap:18px; flex-wrap:wrap; }
-  .compare-item{ text-align:right; }
-  .compare-item .c-label{ font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); }
-  .compare-item .c-val{ font-family:'Big Shoulders Display'; font-size:22px; font-weight:700; line-height:1.1; }
-  .compare-item .c-delta{ font-size:11.5px; font-weight:700; }
-  .compare-item .c-delta.up{ color:var(--warn); }
-  .compare-item .c-delta.down{ color:var(--good); }
-  .compare-item .c-delta.flat{ color:var(--ink-soft); }
+  /* ============ Formulario: dos campos por propiedad ============ */
+  .prop-fields{ display:flex; gap:10px; flex-wrap:wrap; flex:1 1 340px; }
+  .prop-fields textarea{ flex:1 1 200px; }
+  .hist-seg{ color:var(--ink-soft); font-size:11.5px; }
+  .score-dot.lg{ width:48px; height:48px; font-size:19px; }
+  .score-dot.sm{ width:30px; height:30px; font-size:12.5px; }
+  .score-dot.empty{ color:var(--ink-soft); }
 
-  .kpi-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-bottom:26px; }
-  .kpi-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); }
-  .kpi-card .k-label{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; }
-  .kpi-card .k-val{ font-family:'Big Shoulders Display'; font-size:34px; font-weight:800; margin-top:4px; }
-
-  .top3-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:28px; }
-  @media (max-width:640px){ .top3-grid{ grid-template-columns:1fr; } }
-  .top3-card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); }
-  .top3-card h3{ font-size:15px; font-weight:700; margin-bottom:12px; }
-  .top3-card.best h3{ color:var(--good); }
-  .top3-card.worst h3{ color:var(--warn); }
-  .top3-row{ display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
-  .top3-row:last-child{ border-bottom:0; }
-  .top3-rank{ font-family:'Big Shoulders Display'; font-weight:700; color:var(--ink-soft); width:18px; flex:none; }
-  .top3-name{ flex:1; font-weight:600; }
-  .top3-score{ font-family:'IBM Plex Mono'; font-weight:600; }
-
-  .dash-table-wrap{ overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
-  table.dash-table{ width:100%; border-collapse:collapse; font-size:13.5px; min-width:720px; }
-  table.dash-table th{
-    text-align:left; padding:12px 14px; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
-    color:var(--ink-soft); border-bottom:1px solid var(--line); cursor:pointer; user-select:none; white-space:nowrap;
+  /* ============ Seguimiento ============ */
+  .seg-wrap{ max-width:980px; margin:0 auto; padding:16px 24px 80px; }
+  .seg-toolbar{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+  .seg-toolbar .count{ font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--ink-soft); margin-left:auto; }
+  .seg-by{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-soft); font-weight:600; }
+  .seg-by select{ border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:8px; padding:8px 10px; font-family:'Public Sans'; font-size:13.5px; }
+  .seg-check{ display:flex; align-items:center; gap:7px; font-size:13px; color:var(--ink-soft); font-weight:600; cursor:pointer; }
+  .seg-ent{ background:var(--surface); border:1px solid var(--line); border-radius:14px; margin-bottom:10px; box-shadow:var(--shadow); overflow:hidden; }
+  .seg-head{
+    width:100%; display:flex; align-items:center; gap:14px; padding:14px 18px; background:transparent; border:0;
+    cursor:pointer; text-align:left; color:var(--ink); font-family:'Public Sans';
   }
-  table.dash-table th.sortable:hover{ color:var(--accent-ink); }
-  table.dash-table th .arrow{ font-size:10px; margin-left:3px; opacity:.6; }
-  table.dash-table td{ padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:middle; }
-  table.dash-table tr:last-child td{ border-bottom:0; }
-  table.dash-table .ent-code{ font-family:'Big Shoulders Display'; font-weight:700; font-size:15px; }
-  table.dash-table .ent-lead{ color:var(--ink-soft); font-size:12px; }
-  table.dash-table .score-pill{
-    display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px; border-radius:7px;
-    color:#fff; font-family:'Big Shoulders Display'; font-weight:700; font-size:13px; padding:0 8px;
-  }
-  table.dash-table .count-pill{
-    display:inline-flex; align-items:center; justify-content:center; min-width:26px; height:26px; border-radius:50%;
-    color:#fff; font-family:'IBM Plex Mono'; font-weight:600; font-size:12.5px;
-  }
+  .seg-head:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .seg-name{ flex:1; min-width:0; }
+  .seg-name b{ display:block; font-size:16px; font-weight:700; }
+  .seg-name small{ color:var(--ink-soft); font-family:'IBM Plex Mono'; font-size:11.5px; }
+  .seg-chips{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .chip{ font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; background:var(--line); color:var(--ink-soft); white-space:nowrap; }
+  .chip.warn{ background:var(--warn-soft); color:var(--warn); }
+  .chip.ok{ background:var(--good-soft); color:var(--good); }
+  .seg-caret{ transition:transform .15s; color:var(--ink-soft); }
+  .seg-ent.open .seg-caret{ transform:rotate(90deg); }
+  .seg-body{ padding:6px 18px 18px; border-top:1px solid var(--line); }
+  .seg-counters{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center; background:var(--accent-soft); border-radius:12px; padding:14px; margin:14px 0 10px; }
+  .stepper{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .stepper .metric-label{ font-size:11px; letter-spacing:.04em; color:var(--ink-soft); font-weight:600; }
+  .stepper-row{ display:flex; align-items:center; gap:8px; }
+  .step-btn{ width:32px; height:32px; border-radius:50%; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; line-height:1; cursor:pointer; }
+  .step-btn:hover{ border-color:var(--accent); color:var(--accent-ink); }
+  .step-val{ min-width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Big Shoulders Display'; font-weight:700; font-size:17px; }
+  .seg-calc{ font-size:13px; color:var(--ink-soft); margin-bottom:14px; text-align:center; }
+  .seg-calc .pos{ color:var(--good); font-weight:700; }
+  .seg-calc .neg{ color:var(--warn); font-weight:700; }
+  .seg-prop{ border:1px solid var(--line); border-radius:11px; padding:12px 14px; margin-bottom:8px; background:var(--paper); }
+  .seg-prop-head{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .seg-item{ display:flex; align-items:flex-start; gap:10px; padding:7px 0; cursor:pointer; font-size:14px; }
+  .seg-item input{ margin-top:3px; width:18px; height:18px; accent-color:var(--accent); flex:none; }
+  .seg-item.done .seg-item-text{ text-decoration:line-through; color:var(--ink-soft); }
+  .seg-item-text{ flex:1; }
+  .seg-item-meta{ font-size:11.5px; color:var(--ink-soft); white-space:nowrap; }
+  .seg-done-toggle{ border:0; background:transparent; color:var(--ink-soft); font-family:'Public Sans'; font-weight:600; font-size:13px; cursor:pointer; padding:8px 0; }
+  .seg-done{ border-top:1px dashed var(--line); padding-top:6px; }
 </style>
 
 
@@ -448,7 +443,7 @@
 <nav class="app-tabs">
   <button data-panel="directorio" class="active">Directorio</button>
   <button data-panel="auditorias">Auditorías</button>
-  <button data-panel="dashboard">Dashboard</button>
+  <button data-panel="seguimiento">Seguimiento</button>
 </nav>
 
 <section id="panel-directorio" class="app-panel active">
@@ -1517,7 +1512,7 @@
   <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones y observaciones mostradas NO son evaluaciones reales.</div></div>
   <div class="panel-head">
     <h2>Auditoría de entidad</h2>
-    <p>Registra la evaluación de una entidad. Lo que envíes queda guardado como base de datos y alimenta el Dashboard de rendimiento.</p>
+    <p>Registra la evaluación de una entidad. Lo que envíes queda guardado en el Sheet. Las tareas que escribas en «Seguimiento» aparecen en la pestaña Seguimiento para irlas cerrando.</p>
   </div>
   <div class="form-wrap">
     <form id="audit-form">
@@ -1564,48 +1559,24 @@
   </div>
 </section>
 
-<section id="panel-dashboard" class="app-panel">
-  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones y observaciones mostradas NO son evaluaciones reales.</div></div>
+<section id="panel-seguimiento" class="app-panel">
+  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones, tareas y observaciones mostradas NO son reales.</div></div>
   <div class="panel-head">
-    <h2>Dashboard de rendimiento</h2>
-    <p>Promedios y retrasos calculados en vivo a partir de las auditorías registradas.</p>
+    <h2>Seguimiento</h2>
+    <p>Busca un capacitador, revisa lo que quedó pendiente en cada Salón y marca las tareas como hechas. La puntuación sube al cerrar tareas y baja con los retrasos.</p>
   </div>
-  <div class="dash-wrap">
-    <div class="dash-toolbar">
-      <div class="month-pick">
-        <label for="dash-month">Mes</label>
-        <input type="month" id="dash-month">
+  <div class="seg-wrap">
+    <div class="seg-toolbar">
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="seg-search" type="text" placeholder="Buscar capacitador, entidad o Salón…">
       </div>
-      <div class="compare-corner" id="dash-compare"></div>
+      <label class="seg-by">Registrando como <select id="seg-by"><option value="">Elige…</option></select></label>
+      <label class="seg-check"><input type="checkbox" id="seg-only-open"> Solo con pendientes</label>
+      <span class="count" id="seg-count"></span>
     </div>
-
-    <div class="kpi-row" id="dash-kpis"></div>
-
-    <div class="top3-grid">
-      <div class="top3-card best">
-        <h3>Top 3 · Mejor puntuación</h3>
-        <div id="dash-top-best"></div>
-      </div>
-      <div class="top3-card worst">
-        <h3>Top 3 · Peor puntuación</h3>
-        <div id="dash-top-worst"></div>
-      </div>
-    </div>
-
-    <div class="dash-table-wrap">
-      <table class="dash-table">
-        <thead>
-          <tr>
-            <th>Entidad</th>
-            <th class="sortable" data-sort="score">Promedio<span class="arrow"></span></th>
-            <th class="sortable" data-sort="vcmDelayed">VCM retrasadas<span class="arrow"></span></th>
-            <th class="sortable" data-sort="vcmUnassigned">VCM sin asignar<span class="arrow"></span></th>
-            <th class="sortable" data-sort="tasksDelayed">Tareas retrasadas<span class="arrow"></span></th>
-          </tr>
-        </thead>
-        <tbody id="dash-tbody"></tbody>
-      </table>
-    </div>
+    <div class="form-toast" id="seg-toast"></div>
+    <div id="seg-list"></div>
   </div>
 </section>
 
@@ -1746,7 +1717,7 @@ const appTabs = document.querySelectorAll(".app-tabs button");
 const appPanels = {
   directorio: document.getElementById("panel-directorio"),
   auditorias: document.getElementById("panel-auditorias"),
-  dashboard: document.getElementById("panel-dashboard"),
+  seguimiento: document.getElementById("panel-seguimiento"),
 };
 appTabs.forEach(btn=>{
   btn.addEventListener("click", ()=>{
@@ -1755,7 +1726,7 @@ appTabs.forEach(btn=>{
     Object.entries(appPanels).forEach(([key, panel])=>{
       panel.classList.toggle("active", key===btn.dataset.panel);
     });
-    if(btn.dataset.panel==="dashboard") refreshDashboard();
+    if(btn.dataset.panel==="seguimiento"){ renderSeguimiento(); loadAll().then(renderSeguimiento); }
   });
 });
 
@@ -1793,26 +1764,24 @@ appTabs.forEach(btn=>{
 })();
 
 /* ============================================================
-   EXAMPLE DATA — seeds the Auditorías/Dashboard demo so it opens
-   populated. Marked clearly as examples; real submissions (and,
-   where the DB capability is reachable, the shared database) take
-   over from here.
+   DATOS DE EJEMPLO — solo para demostración mientras la página
+   no esté conectada al Sheet (API_URL vacío).
    ============================================================ */
 const EXAMPLE_AUDITS = [
   {id:"ex1", auditor:"José Alberto Ortega", date:"2026-09-05", type:"jwtask", entityCode:"MIR23", month:"2026-09",
-    propertyScores:{"VEN0575":{score:8,obs:"Buen mantenimiento general"},"VEN0957":{score:6,obs:"Falta pintura en fachada"}},
+    propertyScores:{"VEN0575":{score:8,obs:"Buen mantenimiento general"},"VEN0957":{score:6,obs:"Falta pintura en fachada",followup:"Pintar la fachada"}},
     tasksDelayed:2, vcmDelayed:1, vcmUnassigned:0, notes:"Revisar pintura en la próxima visita."},
   {id:"ex2", auditor:"Ismael Restrepo", date:"2026-09-10", type:"inspecciones", entityCode:"DC1", month:"2026-09",
     propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0437":{score:7,obs:"Jardín necesita poda"}}, notes:""},
   {id:"ex3", auditor:"Greisy de Ortega", date:"2026-09-12", type:"proyectos", entityCode:"DC4", month:"2026-09",
     projectScore:9, notes:"Proyecto de techo avanza bien."},
   {id:"ex4", auditor:"Maria F. Rodríguez", date:"2026-09-15", type:"jwtask", entityCode:"MIR3", month:"2026-09",
-    propertyScores:{"VEN1338":{score:4,obs:"Aire acondicionado dañado"},"VEN0485":{score:5,obs:"Pendiente revisión eléctrica"}},
+    propertyScores:{"VEN1338":{score:4,obs:"Aire acondicionado dañado",followup:"Reparar el aire acondicionado"},"VEN0485":{score:5,obs:"Pendiente revisión eléctrica",followup:"Hacer la revisión eléctrica"}},
     tasksDelayed:5, vcmDelayed:3, vcmUnassigned:2, notes:"Prioridad alta."},
   {id:"ex5", auditor:"Sofía de Restrepo", date:"2026-09-18", type:"inspecciones", entityCode:"MIR16", month:"2026-09",
     propertyInspection:{"VEN0363":{score:8,obs:"Bien"},"VEN0462":{score:8,obs:"Bien"}}, notes:""},
   {id:"ex6", auditor:"Emirson Rodríguez", date:"2026-09-20", type:"jwtask", entityCode:"MIR6", month:"2026-09",
-    propertyScores:{"VEN0105":{score:7,obs:"OK"},"VEN0123":{score:6,obs:"Falta limpieza de jardín"}},
+    propertyScores:{"VEN0105":{score:7,obs:"OK"},"VEN0123":{score:6,obs:"Falta limpieza de jardín",followup:"Limpiar el jardín"}},
     tasksDelayed:1, vcmDelayed:0, vcmUnassigned:1, notes:""},
   {id:"ex7", auditor:"José Alberto Ortega", date:"2026-10-02", type:"jwtask", entityCode:"MIR23", month:"2026-10",
     propertyScores:{"VEN0575":{score:9,obs:"Pintura ya resuelta, muy buen estado"},"VEN0957":{score:9,obs:"Mejoró notablemente"}},
@@ -1821,53 +1790,153 @@ const EXAMPLE_AUDITS = [
     propertyScores:{"VEN0194":{score:8,obs:"Bien"},"VEN1222":{score:9,obs:"Muy bien cuidado"}},
     tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Confirmo lo registrado por José Alberto."},
   {id:"ex9", auditor:"Ismael Restrepo", date:"2026-10-03", type:"inspecciones", entityCode:"DC1", month:"2026-10",
-    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0600":{score:8,obs:"Bien, revisar iluminación exterior"}}, notes:""},
+    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0600":{score:8,obs:"Bien, revisar iluminación exterior",followup:"Revisar la iluminación exterior"}}, notes:""},
   {id:"ex10", auditor:"Islena de Gómez", date:"2026-10-04", type:"proyectos", entityCode:"DC4", month:"2026-10",
     projectScore:9, notes:"Avance 80% del proyecto de techo."},
   {id:"ex11", auditor:"Maria F. Rodríguez", date:"2026-10-06", type:"jwtask", entityCode:"MIR3", month:"2026-10",
-    propertyScores:{"VEN1338":{score:5,obs:"Aire acondicionado sigue pendiente de repuesto"},"VEN1528":{score:7,obs:"Bien"}},
+    propertyScores:{"VEN1338":{score:5,obs:"Aire acondicionado sigue pendiente de repuesto",followup:"Conseguir el repuesto del aire acondicionado\nCotizar con otro proveedor"},"VEN1528":{score:7,obs:"Bien",followup:"Revisar las goteras del techo"}},
     tasksDelayed:4, vcmDelayed:2, vcmUnassigned:2, notes:"Seguimos esperando el repuesto del proveedor."},
   {id:"ex12", auditor:"Sofía de Restrepo", date:"2026-10-08", type:"inspecciones", entityCode:"MIR16", month:"2026-10",
-    propertyInspection:{"VEN0363":{score:9,obs:"Muy bien"},"VEN0572":{score:7,obs:"Falta mantenimiento de jardín"}}, notes:""},
+    propertyInspection:{"VEN0363":{score:9,obs:"Muy bien"},"VEN0572":{score:7,obs:"Falta mantenimiento de jardín",followup:"Podar el jardín"}}, notes:""},
   {id:"ex13", auditor:"Emirson Rodríguez", date:"2026-10-09", type:"jwtask", entityCode:"MIR6", month:"2026-10",
     propertyScores:{"VEN0105":{score:8,obs:"Mejoró"},"VEN0348":{score:9,obs:"Excelente"}},
     tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Gran avance este mes."},
   {id:"ex14", auditor:"Greisy de Ortega", date:"2026-10-10", type:"jwtask", entityCode:"MIR21", month:"2026-10",
-    propertyScores:{"VEN0205":{score:3,obs:"Varias tareas sin completar"},"VEN0720":{score:4,obs:"Falta seguimiento"}},
+    propertyScores:{"VEN0205":{score:3,obs:"Varias tareas sin completar",followup:"Completar las tareas atrasadas del salón\nAsignar responsable de limpieza"},"VEN0720":{score:4,obs:"Falta seguimiento",followup:"Dar seguimiento a las VCM pendientes"}},
     tasksDelayed:6, vcmDelayed:4, vcmUnassigned:3, notes:"Requiere atención urgente del representante."},
   {id:"ex15", auditor:"José Alberto Ortega", date:"2026-10-11", type:"inspecciones", entityCode:"DC11", month:"2026-10",
-    propertyInspection:{"VEN0497":{score:6,obs:"Regular, revisar techo"},"VEN0811":{score:7,obs:"Bien"}}, notes:""},
+    propertyInspection:{"VEN0497":{score:6,obs:"Regular, revisar techo",followup:"Revisar el techo"},"VEN0811":{score:7,obs:"Bien"}}, notes:""},
 ];
 
-/* ============================================================
-   STATE
-   ============================================================ */
-let DB = null;
-let AUDITS = EXAMPLE_AUDITS.slice();
-let selectedType = null;
-let dashSort = {key:"vcmDelayed", dir:"desc"};
-
-async function initDb(){
-  try{
-    if(window.claude && typeof window.claude.use === "function"){
-      DB = await window.claude.use("db");
-    }
-  }catch(e){ DB = null; }
+function splitLines(s){
+  return String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,20);
 }
-async function loadAuditsFromDb(){
-  if(!DB) return AUDITS;
+function itemsFromRecord(rec){
+  const field = rec.type==="jwtask" ? "propertyScores" : rec.type==="inspecciones" ? "propertyInspection" : null;
+  const out = [];
+  if(!field || !rec[field]) return out;
+  Object.entries(rec[field]).forEach(([key,r])=>{
+    splitLines(r.followup).forEach((text,idx)=>{
+      out.push({id:`${rec.id}-${key}-${idx}`, auditId:rec.id, date:rec.date, entityCode:rec.entityCode, type:rec.type,
+        propKey:key, text, by:rec.auditor, done:false, doneAt:"", doneBy:""});
+    });
+  });
+  return out;
+}
+function deriveEstado(audits){
+  const est = {};
+  audits.filter(a=>a.type==="jwtask")
+    .sort((a,b)=>(a.date||"").localeCompare(b.date||""))
+    .forEach(a=>{ est[a.entityCode] = {tareas:a.tasksDelayed||0, vcmRet:a.vcmDelayed||0, vcmSin:a.vcmUnassigned||0}; });
+  return est;
+}
+function buildExampleItems(){
+  const items = EXAMPLE_AUDITS.flatMap(itemsFromRecord);
+  const cerrar = {"ex1-VEN0957-0":"2026-10-02","ex6-VEN0123-0":"2026-10-04","ex11-VEN1528-0":"2026-10-12","ex12-VEN0572-0":"2026-10-15"};
+  items.forEach(i=>{ if(cerrar[i.id]){ i.done = true; i.doneAt = cerrar[i.id]; i.doneBy = "Dan Gómez"; } });
+  return items;
+}
+
+/* ============================================================
+   ESTADO + API (Google Sheet vía Apps Script)
+   ============================================================ */
+const API_URL = "";
+
+let AUDITS = EXAMPLE_AUDITS.slice();
+let ITEMS = buildExampleItems();
+let ESTADO = deriveEstado(AUDITS);
+let selectedType = null;
+
+async function apiGet(){
+  const res = await fetch(API_URL + "?action=all", {redirect:"follow"});
+  const data = await res.json();
+  if(!data.ok) throw new Error(data.error || "respuesta inválida");
+  return data;
+}
+async function apiPost(payload){
+  const res = await fetch(API_URL, {method:"POST", redirect:"follow", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(payload)});
+  const out = await res.json();
+  if(!out.ok) throw new Error(out.error || "el Sheet rechazó el envío");
+  return out;
+}
+async function loadAll(){
+  if(!API_URL) return;
   try{
-    const snap = await DB.collection("audits").limit(500).get();
-    const docs = snap.docs.map(d=>({id:d.id, ...d.data()}));
-    return docs.length ? docs : AUDITS;
+    const d = await apiGet();
+    AUDITS = d.audits; ITEMS = d.items; ESTADO = d.estado;
+    document.querySelectorAll(".sample-banner").forEach(b=>b.parentElement.remove());
   }catch(e){
-    console.error("db read failed", e);
-    return AUDITS;
+    console.error("No se pudo leer el Sheet", e);
   }
 }
+function todayStr(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
 
 /* ============================================================
-   AUDIT FORM
+   PUNTUACIÓN (todo el cálculo vive aquí, en un solo lugar)
+   - Base: promedio de la última puntuación de cada propiedad evaluada
+     (y del proyecto, si hay).
+   - Tareas cerradas: cada propiedad recupera hasta RECOVERY de los puntos
+     que le faltan para 10, en proporción a las tareas cerradas (cuentan las
+     de la última auditoría, las que sigan pendientes de auditorías previas
+     y las cerradas después de la última auditoría). Cerrar
+     tareas de una propiedad con nota baja recupera más puntos que cerrar
+     las de una con nota alta.
+   - Retrasos: penalización que se satura (no crece sin límite) y se
+     diluye según el tamaño de la entidad.
+   ============================================================ */
+const RECOVERY = 0.8;
+const PENALTY_MAX = {tareas:1.5, vcmRet:1.5, vcmSin:1.0};
+
+function delayPenalty(est, nProps){
+  est = est || {};
+  const h = Math.max(3, 0.8*nProps);
+  const part = (x,max)=>{ x = Number(x)||0; return max * (x/(x+h)); };
+  const tareas = part(est.tareas, PENALTY_MAX.tareas);
+  const vcmRet = part(est.vcmRet, PENALTY_MAX.vcmRet);
+  const vcmSin = part(est.vcmSin, PENALTY_MAX.vcmSin);
+  return {tareas, vcmRet, vcmSin, total: tareas+vcmRet+vcmSin};
+}
+function latestSlots(code){
+  const slots = {};
+  AUDITS.filter(a=>a.entityCode===code)
+    .sort((a,b)=> (a.date||"").localeCompare(b.date||"") || String(a.createdAt||a.id).localeCompare(String(b.createdAt||b.id)))
+    .forEach(a=>{
+      if(a.type==="proyectos" && typeof a.projectScore==="number"){
+        slots["proyectos"] = {kind:"proyecto", key:null, type:"proyectos", raw:a.projectScore, auditId:a.id};
+      }
+      const field = a.type==="jwtask" ? "propertyScores" : a.type==="inspecciones" ? "propertyInspection" : null;
+      if(field && a[field]) Object.entries(a[field]).forEach(([key,rec])=>{
+        if(typeof rec.score==="number") slots[a.type+"|"+key] = {kind:"prop", key, type:a.type, raw:rec.score, auditId:a.id, date:a.date||""};
+      });
+    });
+  return Object.values(slots);
+}
+function scoreEntity(code){
+  const unit = UNIT_BY_CODE[code];
+  const slots = latestSlots(code);
+  if(!slots.length) return null;
+  slots.forEach(s=>{
+    if(s.kind==="prop"){
+      const its = ITEMS.filter(i=>i.entityCode===code && i.type===s.type && i.propKey===s.key &&
+        (i.auditId===s.auditId || !i.done || (i.doneAt||"") >= s.date));
+      const closed = its.filter(i=>i.done).length;
+      s.items = its.length; s.closed = closed;
+      s.eff = s.raw + (10 - s.raw) * RECOVERY * (its.length ? closed/its.length : 0);
+    } else { s.items = 0; s.closed = 0; s.eff = s.raw; }
+  });
+  const mean = arr => arr.reduce((t,n)=>t+n,0)/arr.length;
+  const raw = mean(slots.map(s=>s.raw));
+  const eff = mean(slots.map(s=>s.eff));
+  const pen = delayPenalty(ESTADO[code], unit.propsParsed.length);
+  const score = Math.max(1, Math.min(10, eff - pen.total));
+  return {score, raw, recovered: eff - raw, pen, slots};
+}
+
+/* ============================================================
+   FORMULARIO DE AUDITORÍA
    ============================================================ */
 function renderDynamicSection(typeVal, entityCode){
   const container = document.getElementById("f-dynamic");
@@ -1912,7 +1981,10 @@ function renderDynamicSection(typeVal, entityCode){
           <button type="button" class="hist-toggle" data-hist-prop="${escapeHtml(key)}" title="Ver historial">▸</button>
         </div>
         <div class="prop-block-body">
-          <textarea data-obs placeholder="Observaciones…"></textarea>
+          <div class="prop-fields">
+            <textarea data-obs placeholder="Observaciones…"></textarea>
+            <textarea data-followup placeholder="Seguimiento: una tarea por línea (saldrá en la pestaña Seguimiento)"></textarea>
+          </div>
           <div>
             <div class="metric-label" style="margin-bottom:6px;">${scoreLabel}</div>
             <div class="score-ctrl">
@@ -1926,19 +1998,20 @@ function renderDynamicSection(typeVal, entityCode){
     }).join("");
 
     if(typeVal==="jwtask"){
+      const est = ESTADO[entityCode] || {tareas:0,vcmRet:0,vcmSin:0};
       html += `
       <div class="metrics-row">
         <div class="metric-ctrl">
-          <div class="metric-label">Tareas retrasadas (mes)</div>
-          <div class="score-ctrl"><input type="number" min="0" id="m-tasks" value="0"><div class="score-dot" id="m-tasks-dot">0</div></div>
+          <div class="metric-label">Tareas retrasadas</div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-tasks" value="${est.tareas}"><div class="score-dot" id="m-tasks-dot">0</div></div>
         </div>
         <div class="metric-ctrl">
           <div class="metric-label">VCMs retrasadas</div>
-          <div class="score-ctrl"><input type="number" min="0" id="m-vcmdelay" value="0"><div class="score-dot" id="m-vcmdelay-dot">0</div></div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-vcmdelay" value="${est.vcmRet}"><div class="score-dot" id="m-vcmdelay-dot">0</div></div>
         </div>
         <div class="metric-ctrl">
           <div class="metric-label">VCMs sin asignar</div>
-          <div class="score-ctrl"><input type="number" min="0" id="m-vcmunassigned" value="0"><div class="score-dot" id="m-vcmunassigned-dot">0</div></div>
+          <div class="score-ctrl"><input type="number" min="0" id="m-vcmunassigned" value="${est.vcmSin}"><div class="score-dot" id="m-vcmunassigned-dot">0</div></div>
         </div>
       </div>`;
     }
@@ -1966,10 +2039,11 @@ function renderDynamicSection(typeVal, entityCode){
             .sort((a,b)=> (b.date||"").localeCompare(a.date||""));
           panel.innerHTML = entries.length ? entries.map(a=>{
             const rec = a[field][propKey];
+            const seg = splitLines(rec.followup);
             return `<div class="hist-row">
               <span class="hist-date">${fmtDate(a.date)}</span>
               <span class="hist-dot" style="background:${scoreColor(rec.score)}">${rec.score ?? "–"}</span>
-              <span class="hist-text">${escapeHtml(rec.obs || "—")}</span>
+              <span class="hist-text">${escapeHtml(rec.obs || "—")}${seg.length ? `<br><small class="hist-seg">Seguimiento: ${escapeHtml(seg.join(" · "))}</small>` : ""}</span>
               <span class="hist-auditor">${escapeHtml(a.auditor)}</span>
             </div>`;
           }).join("") : '<div class="hist-empty">Sin historial previo para este Salón.</div>';
@@ -1992,6 +2066,18 @@ function renderDynamicSection(typeVal, entityCode){
   container.innerHTML = "";
 }
 
+function collectProps(){
+  const out = {};
+  document.querySelectorAll("#f-dynamic .prop-block").forEach(block=>{
+    const key = block.dataset.prop;
+    const scoreVal = block.querySelector("[data-score]").value;
+    const obs = block.querySelector("[data-obs]").value.trim();
+    const followup = splitLines(block.querySelector("[data-followup]").value).join("\n");
+    if(scoreVal || obs || followup) out[key] = {score: scoreVal ? Number(scoreVal) : null, obs, followup};
+  });
+  return out;
+}
+
 function wireForm(){
   const auditorSel = document.getElementById("f-auditor");
   AUDITORS.forEach(name=>{
@@ -2000,7 +2086,7 @@ function wireForm(){
     auditorSel.appendChild(opt);
   });
 
-  document.getElementById("f-date").valueAsDate = new Date();
+  document.getElementById("f-date").value = todayStr();
 
   const typeGrid = document.getElementById("f-type-grid");
   EVAL_TYPES.forEach(t=>{
@@ -2064,6 +2150,7 @@ function wireForm(){
     }
 
     const record = {
+      action: "audit",
       auditor, date, type: selectedType,
       typeOtherText: selectedType==="otros" ? document.getElementById("f-type-other").value.trim() : "",
       entityCode, month: monthOf(date),
@@ -2075,44 +2162,35 @@ function wireForm(){
       const sel = document.getElementById("proj-score");
       record.projectScore = sel && sel.value ? Number(sel.value) : null;
     } else if(selectedType==="jwtask"){
-      record.propertyScores = {};
-      document.querySelectorAll("#f-dynamic .prop-block").forEach(block=>{
-        const key = block.dataset.prop;
-        const scoreVal = block.querySelector("[data-score]").value;
-        const obsVal = block.querySelector("[data-obs]").value.trim();
-        if(scoreVal || obsVal) record.propertyScores[key] = {score: scoreVal?Number(scoreVal):null, obs: obsVal};
-      });
+      record.propertyScores = collectProps();
       record.tasksDelayed = Number(document.getElementById("m-tasks").value)||0;
       record.vcmDelayed = Number(document.getElementById("m-vcmdelay").value)||0;
       record.vcmUnassigned = Number(document.getElementById("m-vcmunassigned").value)||0;
     } else if(selectedType==="inspecciones"){
-      record.propertyInspection = {};
-      document.querySelectorAll("#f-dynamic .prop-block").forEach(block=>{
-        const key = block.dataset.prop;
-        const scoreVal = block.querySelector("[data-score]").value;
-        const obsVal = block.querySelector("[data-obs]").value.trim();
-        if(scoreVal || obsVal) record.propertyInspection[key] = {score: scoreVal?Number(scoreVal):null, obs: obsVal};
-      });
+      record.propertyInspection = collectProps();
     }
 
     submitBtn.disabled = true; submitBtn.textContent = "Guardando…";
     try{
-      if(DB){
-        const ref = await DB.collection("audits").add(record);
-        record.id = ref.id;
+      if(API_URL){
+        await apiPost(record);
+        await loadAll();
+        toast.textContent = "Auditoría guardada en el Sheet.";
       } else {
         record.id = "local-" + Date.now();
+        AUDITS.push(record);
+        ITEMS.push(...itemsFromRecord(record));
+        if(record.type==="jwtask") ESTADO[entityCode] = {tareas:record.tasksDelayed, vcmRet:record.vcmDelayed, vcmSin:record.vcmUnassigned};
+        toast.textContent = "Auditoría guardada solo en esta sesión (la página aún no está conectada al Sheet).";
       }
-      AUDITS.push(record);
-      toast.textContent = DB ? "Auditoría guardada en la base de datos." : "Auditoría guardada para esta sesión (sin conexión a la base de datos compartida).";
       toast.className = "form-toast show";
       e.target.reset();
       selectedType = null;
       typeGrid.querySelectorAll(".type-card").forEach(c=>c.classList.remove("active"));
       document.getElementById("f-type-other").style.display = "none";
       document.getElementById("f-dynamic").innerHTML = "";
-      document.getElementById("f-date").valueAsDate = new Date();
-      if(appPanels.dashboard.classList.contains("active")) rerenderDashboard();
+      document.getElementById("f-date").value = todayStr();
+      renderSeguimiento();
     }catch(err){
       toast.textContent = "No se pudo guardar: " + (err.message || "error desconocido");
       toast.className = "form-toast err show";
@@ -2123,142 +2201,204 @@ function wireForm(){
 }
 
 /* ============================================================
-   DASHBOARD
+   SEGUIMIENTO
    ============================================================ */
-function computeMonthStats(month){
-  const perEntity = {};
-  UNITS.forEach(u=> perEntity[u.code] = {scores:[], latestJwTaskDate:null, tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0});
-  AUDITS.filter(a=>a.month===month).forEach(a=>{
-    const b = perEntity[a.entityCode];
-    if(!b) return;
-    if(a.type==="proyectos" && typeof a.projectScore==="number") b.scores.push(a.projectScore);
-    if(a.type==="jwtask"){
-      if(a.propertyScores) Object.values(a.propertyScores).forEach(r=>{ if(typeof r.score==="number") b.scores.push(r.score); });
-      if(!b.latestJwTaskDate || a.date > b.latestJwTaskDate){
-        b.latestJwTaskDate = a.date;
-        b.tasksDelayed = a.tasksDelayed||0;
-        b.vcmDelayed = a.vcmDelayed||0;
-        b.vcmUnassigned = a.vcmUnassigned||0;
-      }
-    }
-    if(a.type==="inspecciones" && a.propertyInspection) Object.values(a.propertyInspection).forEach(r=>{ if(typeof r.score==="number") b.scores.push(r.score); });
-  });
-  const rows = UNITS.map(u=>{
-    const b = perEntity[u.code];
-    const score = b.scores.length ? b.scores.reduce((s,n)=>s+n,0)/b.scores.length : null;
-    return {code:u.code, leadName:u.leadName, type:u.type, score, tasksDelayed:b.tasksDelayed, vcmDelayed:b.vcmDelayed, vcmUnassigned:b.vcmUnassigned};
-  });
-  const totals = rows.reduce((acc,r)=>({
-    tasksDelayed: acc.tasksDelayed + (r.tasksDelayed||0),
-    vcmDelayed: acc.vcmDelayed + (r.vcmDelayed||0),
-    vcmUnassigned: acc.vcmUnassigned + (r.vcmUnassigned||0),
-  }), {tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0});
-  return {rows, totals};
-}
+const SEG_SEARCH = {};
+UNITS.forEach(u=>{
+  SEG_SEARCH[u.code] = normalize([u.code, u.leadName, ...u.members.map(m=>m[0]), ...u.props].join(" "));
+});
+const segOpen = new Set();
+const segDoneOpen = new Set();
 
-function renderKpis(totals){
-  document.getElementById("dash-kpis").innerHTML = `
-    <div class="kpi-card"><div class="k-label">Tareas retrasadas (total)</div><div class="k-val">${totals.tasksDelayed}</div></div>
-    <div class="kpi-card"><div class="k-label">VCMs retrasadas (total)</div><div class="k-val">${totals.vcmDelayed}</div></div>
-    <div class="kpi-card"><div class="k-label">VCMs sin asignar (total)</div><div class="k-val">${totals.vcmUnassigned}</div></div>`;
+function currentBy(){ try{ return localStorage.getItem("z3-by") || ""; }catch(e){ return ""; } }
+function rememberBy(v){ try{ localStorage.setItem("z3-by", v); }catch(e){} }
+function segToast(msg, isErr){
+  const el = document.getElementById("seg-toast");
+  el.textContent = msg;
+  el.className = "form-toast show" + (isErr ? " err" : "");
+  clearTimeout(segToast.t);
+  segToast.t = setTimeout(()=>{ el.className = "form-toast"; }, 4000);
 }
+function requireBy(){
+  const v = document.getElementById("seg-by").value;
+  if(!v){
+    segToast("Elige quién eres en «Registrando como» antes de cambiar algo.", true);
+    document.getElementById("seg-by").focus();
+    return "";
+  }
+  return v;
+}
+function fmtScore(n){ return n==null ? "–" : n.toFixed(1); }
 
-function renderCompare(totals, prevTotals){
-  const items = [
-    {label:"Tareas retrasadas", cur:totals.tasksDelayed, prev:prevTotals.tasksDelayed},
-    {label:"VCM retrasadas", cur:totals.vcmDelayed, prev:prevTotals.vcmDelayed},
-    {label:"VCM sin asignar", cur:totals.vcmUnassigned, prev:prevTotals.vcmUnassigned},
-  ];
-  document.getElementById("dash-compare").innerHTML = items.map(it=>{
-    const diff = it.cur - it.prev;
-    const cls = diff>0 ? "up" : diff<0 ? "down" : "flat";
-    const arrow = diff>0 ? "▲" : diff<0 ? "▼" : "—";
-    return `<div class="compare-item">
-      <div class="c-label">${it.label}</div>
-      <div class="c-val">${it.cur}</div>
-      <div class="c-delta ${cls}">${arrow} ${diff===0 ? "sin cambio" : Math.abs(diff)+" vs. mes anterior"}</div>
+function stepperHtml(code, field, label, val){
+  return `<div class="stepper">
+    <div class="metric-label">${label}</div>
+    <div class="stepper-row">
+      <button type="button" class="step-btn" data-step="-1" data-entity="${code}" data-field="${field}" aria-label="Bajar ${label}">−</button>
+      <span class="step-val" style="background:${severityColor(val)}">${val}</span>
+      <button type="button" class="step-btn" data-step="1" data-entity="${code}" data-field="${field}" aria-label="Subir ${label}">+</button>
+    </div>
+  </div>`;
+}
+function itemHtml(i, showDone){
+  const meta = showDone && i.done
+    ? `Hecho ${fmtDate(i.doneAt)}${i.doneBy ? " · " + escapeHtml(i.doneBy) : ""}`
+    : `${fmtDate(i.date)}${i.by ? " · " + escapeHtml(i.by) : ""}`;
+  return `<label class="seg-item${i.done ? " done" : ""}">
+    <input type="checkbox" data-item="${escapeHtml(i.id)}" ${i.done ? "checked" : ""}>
+    <span class="seg-item-text">${escapeHtml(i.text)}</span>
+    <span class="seg-item-meta">${meta}</span>
+  </label>`;
+}
+function calcHtml(sc){
+  if(!sc) return '<div class="seg-calc muted">Todavía no hay auditorías con puntuación para esta entidad.</div>';
+  return `<div class="seg-calc">Auditorías <b>${sc.raw.toFixed(1)}</b>
+    · <span class="pos">+${sc.recovered.toFixed(1)}</span> por tareas cerradas
+    · <span class="neg">−${sc.pen.total.toFixed(1)}</span> por retrasos
+    = <b>${sc.score.toFixed(1)}</b></div>`;
+}
+function propsHtml(u, sc){
+  const rows = [];
+  const seen = new Set();
+  const addRow = (key, code, name)=>{
+    if(seen.has(key)) return; seen.add(key);
+    const slots = sc ? sc.slots.filter(s=>s.kind==="prop" && s.key===key) : [];
+    const open = ITEMS.filter(i=>i.entityCode===u.code && i.propKey===key && !i.done);
+    const hasDone = ITEMS.some(i=>i.entityCode===u.code && i.propKey===key && i.done);
+    if(!slots.length && !open.length && !hasDone) return;
+    const eff = slots.length ? slots.reduce((t,s)=>t+s.eff,0)/slots.length : null;
+    const dot = eff==null
+      ? '<span class="score-dot sm empty">–</span>'
+      : `<span class="score-dot sm" style="background:${scoreColor(eff)}">${eff.toFixed(1)}</span>`;
+    rows.push(`<div class="seg-prop">
+      <div class="seg-prop-head">${dot}<span class="prop-block-name">${code ? `<span class="code">${escapeHtml(code)}</span> ` : ""}${escapeHtml(name)}</span></div>
+      ${open.length ? open.map(i=>itemHtml(i,false)).join("") : '<div class="hist-empty">Sin pendientes.</div>'}
+    </div>`);
+  };
+  u.propsParsed.forEach(p=> addRow(p.code || p.name, p.code, p.name));
+  ITEMS.filter(i=>i.entityCode===u.code).forEach(i=>{ if(!seen.has(i.propKey)) addRow(i.propKey, null, i.propKey); });
+  const note = u.propsParsed.length && !rows.length ? '<div class="hist-empty">Aún no hay propiedades evaluadas.</div>' : "";
+  return rows.join("") + note;
+}
+function entityHtml({u, sc, open}){
+  const isOpen = segOpen.has(u.code);
+  const est = ESTADO[u.code] || {tareas:0, vcmRet:0, vcmSin:0};
+  const dot = sc
+    ? `<span class="score-dot lg" style="background:${scoreColor(sc.score)}" title="Puntuación de la entidad">${fmtScore(sc.score)}</span>`
+    : '<span class="score-dot lg empty" title="Sin auditorías">–</span>';
+  const chips = [
+    open.length ? `<span class="chip warn">${open.length} pendiente${open.length===1?"":"s"}</span>` : '<span class="chip ok">Al día</span>',
+    est.tareas ? `<span class="chip">Tareas ${est.tareas}</span>` : "",
+    est.vcmRet ? `<span class="chip">VCM ret. ${est.vcmRet}</span>` : "",
+    est.vcmSin ? `<span class="chip">VCM s/a ${est.vcmSin}</span>` : "",
+  ].join("");
+  let body = "";
+  if(isOpen){
+    const done = ITEMS.filter(i=>i.entityCode===u.code && i.done);
+    const doneOpen = segDoneOpen.has(u.code);
+    body = `<div class="seg-body">
+      <div class="seg-counters">
+        ${stepperHtml(u.code,"tareas","Tareas retrasadas",est.tareas)}
+        ${stepperHtml(u.code,"vcmRet","VCMs retrasadas",est.vcmRet)}
+        ${stepperHtml(u.code,"vcmSin","VCMs sin asignar",est.vcmSin)}
+      </div>
+      ${calcHtml(sc)}
+      ${propsHtml(u, sc)}
+      ${done.length ? `<button type="button" class="seg-done-toggle" data-toggle-done="${u.code}">${doneOpen?"▾":"▸"} Completadas (${done.length})</button>
+        ${doneOpen ? `<div class="seg-done">${done.map(i=>itemHtml(i,true)).join("")}</div>` : ""}` : ""}
     </div>`;
-  }).join("");
+  }
+  return `<article class="seg-ent${isOpen ? " open" : ""}">
+    <button type="button" class="seg-head" data-toggle-entity="${u.code}" aria-expanded="${isOpen}">
+      ${dot}
+      <span class="seg-name"><b>${escapeHtml(u.leadName)}</b><small>${u.code} · ${u.type}</small></span>
+      <span class="seg-chips">${chips}</span>
+      <span class="seg-caret">▸</span>
+    </button>${body}
+  </article>`;
 }
-
-function renderTop3(rows){
-  const withData = rows.filter(r=>r.score!=null);
-  const best = [...withData].sort((a,b)=>b.score-a.score).slice(0,3);
-  const worst = [...withData].sort((a,b)=>a.score-b.score).slice(0,3);
-  const render = (list)=> list.length ? list.map((r,i)=>`
-    <div class="top3-row">
-      <span class="top3-rank">${i+1}</span>
-      <span class="top3-name">${r.code} · ${escapeHtml(r.leadName)}</span>
-      <span class="top3-score" style="color:${scoreColor(r.score)}">${r.score.toFixed(1)}</span>
-    </div>`).join("") : '<div class="hist-empty">Sin datos este mes.</div>';
-  document.getElementById("dash-top-best").innerHTML = render(best);
-  document.getElementById("dash-top-worst").innerHTML = render(worst);
-}
-
-function renderTable(rows){
-  const sorted = [...rows].sort((a,b)=>{
-    let av = a[dashSort.key], bv = b[dashSort.key];
-    av = av==null ? -1 : av; bv = bv==null ? -1 : bv;
-    return dashSort.dir==="desc" ? (bv-av) : (av-bv);
-  });
-  document.querySelectorAll("table.dash-table th.sortable").forEach(th=>{
-    const arrow = th.querySelector(".arrow");
-    arrow.textContent = th.dataset.sort===dashSort.key ? (dashSort.dir==="desc" ? "▼" : "▲") : "";
-  });
-  document.getElementById("dash-tbody").innerHTML = sorted.map(r=>`
-    <tr>
-      <td><div class="ent-code">${r.code}</div><div class="ent-lead">${escapeHtml(r.leadName)}</div></td>
-      <td>${r.score!=null ? `<span class="score-pill" style="background:${scoreColor(r.score)}">${r.score.toFixed(1)}</span>` : '<span style="color:var(--ink-soft);">—</span>'}</td>
-      <td><span class="count-pill" style="background:${severityColor(r.vcmDelayed)}">${r.vcmDelayed}</span></td>
-      <td><span class="count-pill" style="background:${severityColor(r.vcmUnassigned)}">${r.vcmUnassigned}</span></td>
-      <td><span class="count-pill" style="background:${severityColor(r.tasksDelayed)}">${r.tasksDelayed}</span></td>
-    </tr>`).join("");
-}
-
-function rerenderDashboard(){
-  const month = document.getElementById("dash-month").value;
-  if(!month) return;
-  const {rows, totals} = computeMonthStats(month);
-  const {totals: prevTotals} = computeMonthStats(prevMonth(month));
-  renderKpis(totals);
-  renderCompare(totals, prevTotals);
-  renderTop3(rows);
-  renderTable(rows);
-}
-
-async function refreshDashboard(){
-  AUDITS = await loadAuditsFromDb();
-  rerenderDashboard();
-}
-
-function wireDashboard(){
-  const monthInput = document.getElementById("dash-month");
-  const today = new Date();
-  monthInput.value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
-  monthInput.addEventListener("change", rerenderDashboard);
-
-  document.querySelectorAll("table.dash-table th.sortable").forEach(th=>{
-    th.addEventListener("click", ()=>{
-      const key = th.dataset.sort;
-      dashSort = {key, dir: (dashSort.key===key && dashSort.dir==="desc") ? "asc" : "desc"};
-      renderTable(computeMonthStats(monthInput.value).rows);
+function renderSeguimiento(){
+  const list = document.getElementById("seg-list");
+  if(!list) return;
+  const q = normalize(document.getElementById("seg-search").value.trim());
+  const onlyOpen = document.getElementById("seg-only-open").checked;
+  const rows = UNITS.map(u=>({u, sc: scoreEntity(u.code), open: ITEMS.filter(i=>i.entityCode===u.code && !i.done)}))
+    .filter(r=>{
+      if(onlyOpen && !r.open.length) return false;
+      if(!q) return true;
+      const extra = normalize(ITEMS.filter(i=>i.entityCode===r.u.code).map(i=>i.text).join(" "));
+      return (SEG_SEARCH[r.u.code] + " " + extra).includes(q);
+    })
+    .sort((a,b)=>{
+      const as = a.sc ? a.sc.score : 99, bs = b.sc ? b.sc.score : 99;
+      return as - bs || a.u.code.localeCompare(b.u.code, "es", {numeric:true});
     });
-  });
+  list.innerHTML = rows.length ? rows.map(entityHtml).join("") : '<div class="hist-empty" style="padding:30px 0;text-align:center;">Sin resultados.</div>';
+  document.getElementById("seg-count").textContent = `${rows.length} de ${UNITS.length} entidades`;
+}
 
-  rerenderDashboard();
+async function toggleItem(id, done){
+  const by = requireBy();
+  const item = ITEMS.find(i=>i.id===id);
+  if(!item) return;
+  if(!by){ renderSeguimiento(); return; }
+  const prev = {done:item.done, doneAt:item.doneAt, doneBy:item.doneBy};
+  item.done = done; item.doneAt = done ? todayStr() : ""; item.doneBy = done ? by : "";
+  renderSeguimiento();
+  if(API_URL){
+    try{ await apiPost({action:"closeItem", id, done, by}); }
+    catch(err){ Object.assign(item, prev); renderSeguimiento(); segToast("No se pudo guardar: " + err.message, true); }
+  }
+}
+async function changeCounter(code, field, delta){
+  const by = requireBy();
+  if(!by) return;
+  const est = ESTADO[code] = ESTADO[code] || {tareas:0, vcmRet:0, vcmSin:0};
+  const prev = est[field] || 0;
+  const next = Math.max(0, Math.min(999, prev + delta));
+  if(next === prev) return;
+  est[field] = next;
+  renderSeguimiento();
+  if(API_URL){
+    try{ await apiPost({action:"setCounter", entityCode:code, field, value:next, by}); }
+    catch(err){ est[field] = prev; renderSeguimiento(); segToast("No se pudo guardar: " + err.message, true); }
+  }
+}
+
+function wireSeguimiento(){
+  const by = document.getElementById("seg-by");
+  AUDITORS.forEach(n=>{
+    const opt = document.createElement("option");
+    opt.value = n; opt.textContent = n;
+    by.appendChild(opt);
+  });
+  by.value = currentBy();
+  by.addEventListener("change", ()=> rememberBy(by.value));
+  document.getElementById("seg-search").addEventListener("input", renderSeguimiento);
+  document.getElementById("seg-only-open").addEventListener("change", renderSeguimiento);
+
+  const list = document.getElementById("seg-list");
+  list.addEventListener("click", (e)=>{
+    const step = e.target.closest("[data-step]");
+    if(step){ changeCounter(step.dataset.entity, step.dataset.field, Number(step.dataset.step)); return; }
+    const dn = e.target.closest("[data-toggle-done]");
+    if(dn){ const c = dn.dataset.toggleDone; segDoneOpen.has(c) ? segDoneOpen.delete(c) : segDoneOpen.add(c); renderSeguimiento(); return; }
+    const t = e.target.closest("[data-toggle-entity]");
+    if(t){ const c = t.dataset.toggleEntity; segOpen.has(c) ? segOpen.delete(c) : segOpen.add(c); renderSeguimiento(); }
+  });
+  list.addEventListener("change", (e)=>{
+    const cb = e.target.closest("[data-item]");
+    if(cb) toggleItem(cb.dataset.item, cb.checked);
+  });
 }
 
 /* ============================================================
-   BOOT
+   ARRANQUE
    ============================================================ */
 wireForm();
-wireDashboard();
-(async function bootData(){
-  await initDb();
-  const fromDb = await loadAuditsFromDb();
-  AUDITS = fromDb;
-  if(appPanels.dashboard.classList.contains("active")) rerenderDashboard();
-})();
+wireSeguimiento();
+renderSeguimiento();
+loadAll().then(renderSeguimiento);
 
 </script>
 </body>
