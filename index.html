@@ -1509,7 +1509,7 @@
 </section>
 
 <section id="panel-auditorias" class="app-panel">
-  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones y observaciones mostradas NO son evaluaciones reales.</div></div>
+  <div style="padding:0 24px;"><div class="sample-banner conn-banner" hidden></div></div>
   <div class="panel-head">
     <h2>Auditoría de entidad</h2>
     <p>Registra la evaluación de una entidad. Lo que envíes queda guardado en el Sheet. Las tareas que escribas en «Seguimiento» aparecen en la pestaña Seguimiento para irlas cerrando.</p>
@@ -1560,7 +1560,7 @@
 </section>
 
 <section id="panel-seguimiento" class="app-panel">
-  <div style="padding:0 24px;"><div class="sample-banner">Datos de ejemplo para demostración: las puntuaciones, tareas y observaciones mostradas NO son reales.</div></div>
+  <div style="padding:0 24px;"><div class="sample-banner conn-banner" hidden></div></div>
   <div class="panel-head">
     <h2>Seguimiento</h2>
     <p>Busca un capacitador, revisa lo que quedó pendiente en cada Salón y marca las tareas como hechas. La puntuación sube al cerrar tareas y baja con los retrasos.</p>
@@ -1763,88 +1763,17 @@ appTabs.forEach(btn=>{
   applyFilter();
 })();
 
-/* ============================================================
-   DATOS DE EJEMPLO — solo para demostración mientras la página
-   no esté conectada al Sheet (API_URL vacío).
-   ============================================================ */
-const EXAMPLE_AUDITS = [
-  {id:"ex1", auditor:"José Alberto Ortega", date:"2026-09-05", type:"jwtask", entityCode:"MIR23", month:"2026-09",
-    propertyScores:{"VEN0575":{score:8,obs:"Buen mantenimiento general"},"VEN0957":{score:6,obs:"Falta pintura en fachada",followup:"Pintar la fachada"}},
-    tasksDelayed:2, vcmDelayed:1, vcmUnassigned:0, notes:"Revisar pintura en la próxima visita."},
-  {id:"ex2", auditor:"Ismael Restrepo", date:"2026-09-10", type:"inspecciones", entityCode:"DC1", month:"2026-09",
-    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0437":{score:7,obs:"Jardín necesita poda"}}, notes:""},
-  {id:"ex3", auditor:"Greisy de Ortega", date:"2026-09-12", type:"proyectos", entityCode:"DC4", month:"2026-09",
-    projectScore:9, notes:"Proyecto de techo avanza bien."},
-  {id:"ex4", auditor:"Maria F. Rodríguez", date:"2026-09-15", type:"jwtask", entityCode:"MIR3", month:"2026-09",
-    propertyScores:{"VEN1338":{score:4,obs:"Aire acondicionado dañado",followup:"Reparar el aire acondicionado"},"VEN0485":{score:5,obs:"Pendiente revisión eléctrica",followup:"Hacer la revisión eléctrica"}},
-    tasksDelayed:5, vcmDelayed:3, vcmUnassigned:2, notes:"Prioridad alta."},
-  {id:"ex5", auditor:"Sofía de Restrepo", date:"2026-09-18", type:"inspecciones", entityCode:"MIR16", month:"2026-09",
-    propertyInspection:{"VEN0363":{score:8,obs:"Bien"},"VEN0462":{score:8,obs:"Bien"}}, notes:""},
-  {id:"ex6", auditor:"Emirson Rodríguez", date:"2026-09-20", type:"jwtask", entityCode:"MIR6", month:"2026-09",
-    propertyScores:{"VEN0105":{score:7,obs:"OK"},"VEN0123":{score:6,obs:"Falta limpieza de jardín",followup:"Limpiar el jardín"}},
-    tasksDelayed:1, vcmDelayed:0, vcmUnassigned:1, notes:""},
-  {id:"ex7", auditor:"José Alberto Ortega", date:"2026-10-02", type:"jwtask", entityCode:"MIR23", month:"2026-10",
-    propertyScores:{"VEN0575":{score:9,obs:"Pintura ya resuelta, muy buen estado"},"VEN0957":{score:9,obs:"Mejoró notablemente"}},
-    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Excelente seguimiento del capacitador."},
-  {id:"ex8", auditor:"Dan Gómez", date:"2026-10-05", type:"jwtask", entityCode:"MIR23", month:"2026-10",
-    propertyScores:{"VEN0194":{score:8,obs:"Bien"},"VEN1222":{score:9,obs:"Muy bien cuidado"}},
-    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Confirmo lo registrado por José Alberto."},
-  {id:"ex9", auditor:"Ismael Restrepo", date:"2026-10-03", type:"inspecciones", entityCode:"DC1", month:"2026-10",
-    propertyInspection:{"VEN0094":{score:9,obs:"Excelente"},"VEN0600":{score:8,obs:"Bien, revisar iluminación exterior",followup:"Revisar la iluminación exterior"}}, notes:""},
-  {id:"ex10", auditor:"Islena de Gómez", date:"2026-10-04", type:"proyectos", entityCode:"DC4", month:"2026-10",
-    projectScore:9, notes:"Avance 80% del proyecto de techo."},
-  {id:"ex11", auditor:"Maria F. Rodríguez", date:"2026-10-06", type:"jwtask", entityCode:"MIR3", month:"2026-10",
-    propertyScores:{"VEN1338":{score:5,obs:"Aire acondicionado sigue pendiente de repuesto",followup:"Conseguir el repuesto del aire acondicionado\nCotizar con otro proveedor"},"VEN1528":{score:7,obs:"Bien",followup:"Revisar las goteras del techo"}},
-    tasksDelayed:4, vcmDelayed:2, vcmUnassigned:2, notes:"Seguimos esperando el repuesto del proveedor."},
-  {id:"ex12", auditor:"Sofía de Restrepo", date:"2026-10-08", type:"inspecciones", entityCode:"MIR16", month:"2026-10",
-    propertyInspection:{"VEN0363":{score:9,obs:"Muy bien"},"VEN0572":{score:7,obs:"Falta mantenimiento de jardín",followup:"Podar el jardín"}}, notes:""},
-  {id:"ex13", auditor:"Emirson Rodríguez", date:"2026-10-09", type:"jwtask", entityCode:"MIR6", month:"2026-10",
-    propertyScores:{"VEN0105":{score:8,obs:"Mejoró"},"VEN0348":{score:9,obs:"Excelente"}},
-    tasksDelayed:0, vcmDelayed:0, vcmUnassigned:0, notes:"Gran avance este mes."},
-  {id:"ex14", auditor:"Greisy de Ortega", date:"2026-10-10", type:"jwtask", entityCode:"MIR21", month:"2026-10",
-    propertyScores:{"VEN0205":{score:3,obs:"Varias tareas sin completar",followup:"Completar las tareas atrasadas del salón\nAsignar responsable de limpieza"},"VEN0720":{score:4,obs:"Falta seguimiento",followup:"Dar seguimiento a las VCM pendientes"}},
-    tasksDelayed:6, vcmDelayed:4, vcmUnassigned:3, notes:"Requiere atención urgente del representante."},
-  {id:"ex15", auditor:"José Alberto Ortega", date:"2026-10-11", type:"inspecciones", entityCode:"DC11", month:"2026-10",
-    propertyInspection:{"VEN0497":{score:6,obs:"Regular, revisar techo",followup:"Revisar el techo"},"VEN0811":{score:7,obs:"Bien"}}, notes:""},
-];
-
 function splitLines(s){
   return String(s||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).slice(0,20);
 }
-function itemsFromRecord(rec){
-  const field = rec.type==="jwtask" ? "propertyScores" : rec.type==="inspecciones" ? "propertyInspection" : null;
-  const out = [];
-  if(!field || !rec[field]) return out;
-  Object.entries(rec[field]).forEach(([key,r])=>{
-    splitLines(r.followup).forEach((text,idx)=>{
-      out.push({id:`${rec.id}-${key}-${idx}`, auditId:rec.id, date:rec.date, entityCode:rec.entityCode, type:rec.type,
-        propKey:key, text, by:rec.auditor, done:false, doneAt:"", doneBy:""});
-    });
-  });
-  return out;
-}
-function deriveEstado(audits){
-  const est = {};
-  audits.filter(a=>a.type==="jwtask")
-    .sort((a,b)=>(a.date||"").localeCompare(b.date||""))
-    .forEach(a=>{ est[a.entityCode] = {tareas:a.tasksDelayed||0, vcmRet:a.vcmDelayed||0, vcmSin:a.vcmUnassigned||0}; });
-  return est;
-}
-function buildExampleItems(){
-  const items = EXAMPLE_AUDITS.flatMap(itemsFromRecord);
-  const cerrar = {"ex1-VEN0957-0":"2026-10-02","ex6-VEN0123-0":"2026-10-04","ex11-VEN1528-0":"2026-10-12","ex12-VEN0572-0":"2026-10-15"};
-  items.forEach(i=>{ if(cerrar[i.id]){ i.done = true; i.doneAt = cerrar[i.id]; i.doneBy = "Dan Gómez"; } });
-  return items;
-}
-
 /* ============================================================
    ESTADO + API (Google Sheet vía Apps Script)
    ============================================================ */
 const API_URL = "";
 
-let AUDITS = EXAMPLE_AUDITS.slice();
-let ITEMS = buildExampleItems();
-let ESTADO = deriveEstado(AUDITS);
+let AUDITS = [];
+let ITEMS = [];
+let ESTADO = {};
 let selectedType = null;
 
 async function apiGet(){
@@ -1859,14 +1788,23 @@ async function apiPost(payload){
   if(!out.ok) throw new Error(out.error || "el Sheet rechazó el envío");
   return out;
 }
+function setConn(msg){
+  document.querySelectorAll(".conn-banner").forEach(el=>{
+    el.textContent = msg || "";
+    el.hidden = !msg;
+  });
+}
 async function loadAll(){
-  if(!API_URL) return;
+  if(!API_URL){ setConn("La página todavía no está conectada al Sheet: no hay datos que mostrar."); return false; }
   try{
     const d = await apiGet();
     AUDITS = d.audits; ITEMS = d.items; ESTADO = d.estado;
-    document.querySelectorAll(".sample-banner").forEach(b=>b.parentElement.remove());
+    setConn("");
+    return true;
   }catch(e){
     console.error("No se pudo leer el Sheet", e);
+    setConn("No se pudo leer el Sheet. Revisa tu conexión y recarga la página. (" + e.message + ")");
+    return false;
   }
 }
 function todayStr(){
@@ -2172,17 +2110,10 @@ function wireForm(){
 
     submitBtn.disabled = true; submitBtn.textContent = "Guardando…";
     try{
-      if(API_URL){
-        await apiPost(record);
-        await loadAll();
-        toast.textContent = "Auditoría guardada en el Sheet.";
-      } else {
-        record.id = "local-" + Date.now();
-        AUDITS.push(record);
-        ITEMS.push(...itemsFromRecord(record));
-        if(record.type==="jwtask") ESTADO[entityCode] = {tareas:record.tasksDelayed, vcmRet:record.vcmDelayed, vcmSin:record.vcmUnassigned};
-        toast.textContent = "Auditoría guardada solo en esta sesión (la página aún no está conectada al Sheet).";
-      }
+      if(!API_URL) throw new Error("la página no está conectada al Sheet");
+      await apiPost(record);
+      await loadAll();
+      toast.textContent = "Auditoría guardada en el Sheet.";
       toast.className = "form-toast show";
       e.target.reset();
       selectedType = null;
