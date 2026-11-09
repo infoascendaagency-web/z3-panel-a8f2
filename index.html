@@ -1769,12 +1769,14 @@ function splitLines(s){
 /* ============================================================
    ESTADO + API (Google Sheet vía Apps Script)
    ============================================================ */
-const API_URL = "";
+const API_URL = "https://script.google.com/macros/s/AKfycbyd-wUKn-ZJ-iPopEVvrIaiEIfJATnlwOQvlDeFL6gimz6zf_hHerrpMJ1_siPxo_4/exec";
 
 let AUDITS = [];
 let ITEMS = [];
 let ESTADO = {};
 let selectedType = null;
+let EPOCH = 0;    // sube con cada cambio hecho en pantalla
+let WRITES = 0;   // envíos al Sheet todavía en curso
 
 async function apiGet(){
   const res = await fetch(API_URL + "?action=all", {redirect:"follow"});
@@ -1797,7 +1799,9 @@ function setConn(msg){
 async function loadAll(){
   if(!API_URL){ setConn("La página todavía no está conectada al Sheet: no hay datos que mostrar."); return false; }
   try{
+    const epoch = EPOCH;
     const d = await apiGet();
+    if(epoch !== EPOCH || WRITES > 0) return false;   // hubo cambios mientras se leía: esta lectura ya está vieja
     AUDITS = d.audits; ITEMS = d.items; ESTADO = d.estado;
     setConn("");
     return true;
@@ -2111,7 +2115,8 @@ function wireForm(){
     submitBtn.disabled = true; submitBtn.textContent = "Guardando…";
     try{
       if(!API_URL) throw new Error("la página no está conectada al Sheet");
-      await apiPost(record);
+      EPOCH++; WRITES++;
+      try{ await apiPost(record); } finally{ WRITES--; }
       await loadAll();
       toast.textContent = "Auditoría guardada en el Sheet.";
       toast.className = "form-toast show";
@@ -2277,8 +2282,10 @@ async function toggleItem(id, done){
   item.done = done; item.doneAt = done ? todayStr() : ""; item.doneBy = done ? by : "";
   renderSeguimiento();
   if(API_URL){
+    EPOCH++; WRITES++;
     try{ await apiPost({action:"closeItem", id, done, by}); }
     catch(err){ Object.assign(item, prev); renderSeguimiento(); segToast("No se pudo guardar: " + err.message, true); }
+    finally{ WRITES--; if(!WRITES) loadAll().then(renderSeguimiento); }
   }
 }
 async function changeCounter(code, field, delta){
@@ -2291,8 +2298,10 @@ async function changeCounter(code, field, delta){
   est[field] = next;
   renderSeguimiento();
   if(API_URL){
+    EPOCH++; WRITES++;
     try{ await apiPost({action:"setCounter", entityCode:code, field, value:next, by}); }
     catch(err){ est[field] = prev; renderSeguimiento(); segToast("No se pudo guardar: " + err.message, true); }
+    finally{ WRITES--; if(!WRITES) loadAll().then(renderSeguimiento); }
   }
 }
 
